@@ -4,11 +4,15 @@
   --color1: #155dfc;
   --color2: #e5f0ff;
   --color3: #e4effe;
-
 }
-
+.title {
+  @apply font-bold text-lg text-blue-600
+}
+.text {
+  @apply text-gray-700
+}
 .btn {
-  @apply px-4 py-2 rounded-md font-medium  transition-colors text-sm ;
+  @apply px-4 py-2 rounded-md font-medium  transition-colors text-sm max-w-fit flex gap-2;
 }
 .btn-primary {
   @apply bg-blue-600 text-white;
