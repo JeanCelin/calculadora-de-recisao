@@ -1,11 +1,15 @@
-export function decimoTerceiro (salario:number) {
+import { calcMesesDecimoTerceiro } from "./calcMesesDecimoTerceiro";
+export function decimoTerceiro(
+  salario: number,
+  dataAdmissao: string,
+  dataDemissao: string
+) {
   //trabalhador tem direito a 1/12 do 13º salário para cada mês completo trabalhado no ano da demissão.
-  //Se tiver mais de 14 dias no último mês, conta como mês cheio.
+  const mesesTrabalhadosNoAno:number = calcMesesDecimoTerceiro(
+    dataAdmissao,
+    dataDemissao
+  );
+  const decimoTerceiro = (salario / 12) * mesesTrabalhadosNoAno;
 
-  //Precisa fazer a diferença entre 1 de janeiro e a data atual
-  
-  // Por enquanto simular valor
-  return (
-
-  )
+  return decimoTerceiro.toFixed(2);
 }
