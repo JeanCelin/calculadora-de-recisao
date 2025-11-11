@@ -17,7 +17,7 @@ export function calcMesesDecimoTerceiro(
   //Se tiver mais de 14 dias no último mês, conta como mês cheio.
 
   // Se o mes da demissao teve 15 dias ou mais de trabalho, adiciona mais 1 mes
-  if (diaDemissao >= 15) mesesTrabalhados += 1;
+  if (diaDemissao < 15) mesesTrabalhados -= 1;
 
   // Correção caso  o funcionario tenha sido demitido no fim do ano anterior
   if (mesesTrabalhados < 0) mesesTrabalhados += 12;

@@ -9,6 +9,7 @@ export function decimoTerceiro(
     dataAdmissao,
     dataDemissao
   );
+  console.log(`Calc décimo tercerio ${mesesTrabalhadosNoAno}`)
   const decimoTerceiro = (salario / 12) * mesesTrabalhadosNoAno;
 
   return decimoTerceiro.toFixed(2);

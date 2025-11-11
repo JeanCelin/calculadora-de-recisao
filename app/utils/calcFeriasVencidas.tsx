@@ -9,9 +9,7 @@
 
   Todo pagamento de férias (vencidas ou não) deve incluir o acréscimo de 1/3 constitucional (art. 7º, XVII da CF).
 */
-export function feriasVencidas(salario: number, periodos: number) {
-  const feriasComUmTerco = salario * (4 / 3);
-  const feriasAcrecidaPorPeriodos = (salario * periodos) * (4/3)
-
-  return periodos > 1 ? feriasAcrecidaPorPeriodos : feriasComUmTerco
+export function feriasVencidas(salario: number, periodos?: number) {
+  if (!periodos ) return  salario * (4 / 3);
+  if (periodos) return  salario * periodos * (4 / 3);
 }
