@@ -2,7 +2,7 @@ import About from "./components/About";
 import CalcRecisorio from "./utils/calcRecisorio";
 
 export default function Home() {
-  const dataAdmissao = "2023-01-01";
+  const dataAdmissao = "2024-11-01";
   const dataDemissao = "2025-11-13";
 
   const salario = 10000;

@@ -36,5 +36,5 @@ export function feriasProporcionais(
   // Sobra a proporção com o valor das férias
   const feriasProp = ferias * 4/3;
   
-  return feriasProp;
+  return feriasProp.toFixed(2);
 }

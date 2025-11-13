@@ -5,6 +5,7 @@ import { feriasProporcionais } from "./calcFeriasProporcinais";
 import { feriasVencidas } from "./calcFeriasVencidas";
 import CalcFGTS from "./calcFGTS";
 import { saldoSalario } from "./calcSaldoSalario";
+import { AvisoPrevio } from "../types/avisoPrevio";
 
 export default function calcCondicional(
   recisao: Recisao,
@@ -14,9 +15,16 @@ export default function calcCondicional(
   faltas: number,
   tempoTrabalhado: TempoTrabalhado,
   periodos: number,
-  fgtsMulta: boolean
+  fgtsMulta: boolean,
+  avisoPrevio: AvisoPrevio,
 ) {
   const arrayCalc = [];
+
+  if(avisoPrevio === AvisoPrevio.Trabalhado) {
+     console.log('aviso previo trabalhado')
+  } if( avisoPrevio === AvisoPrevio.IndenizadoPeloEmpregador){
+     console.log(`Aviso prévio indenizado`)
+  }
 
   if (recisao.decimoTerceiro) {
     arrayCalc.push(Number(decimoTerceiro(salario, dataAdmissao, dataDemissao)));
@@ -55,11 +63,13 @@ export default function calcCondicional(
   const newArray = arrayCalc.map((element) => {
     return Number(element);
   });
-  console.log(newArray);
-  console.log(
-    `Total R$ ${newArray.reduce(
+
+  const total = newArray.reduce(
       (acumulador, valorAtual) => acumulador + valorAtual,
       0
-    )}`
+    )
+
+  console.log(
+    `Total R$ ${total.toFixed(2)}`
   );
 }

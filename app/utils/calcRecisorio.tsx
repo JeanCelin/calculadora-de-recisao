@@ -1,7 +1,8 @@
 import { calcTempoTrabalhado } from "./calcTempoTrabalhado";
-import { avisoPrevio } from "./calcAvisoPrevio";
 import calcCondicional from "./calcCondicional";
 import TiposDeDemissao from "./tipoDeDemissao";
+import { AvisoPrevio } from "../types/avisoPrevio";
+
 
 // O CalcRecisorio esta recebendo os valores de Page (Mais pra frente do input)
 
@@ -17,11 +18,14 @@ export default function CalcRecisorio(
   // Calcular o tempo total Trabalhado em ano meses e dias
   const tempoTrabalhado = calcTempoTrabalhado(dataAdmissao, dataDemissao);
   const recisao = TiposDeDemissao('pedidoPeloFuncionario')
-  calcCondicional(recisao, salario, dataAdmissao, dataDemissao, faltas, tempoTrabalhado, periodos, fgtsMulta)
+  const avisoPrevioVar: AvisoPrevio = AvisoPrevio.Trabalhado;
+
+
+  calcCondicional(recisao, salario, dataAdmissao, dataDemissao, faltas, tempoTrabalhado, periodos, fgtsMulta, avisoPrevioVar)
 
   // Pega o tipo de pedido de demissao, e retorna quais funções de calculo serão chamadas
   // O aviso prévio virá de um input dedicado
-  const avisoPrevioVar = true;
+
 
   /* -------------------------------------------------------------------------------------------------------------------------------------- */
 

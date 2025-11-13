@@ -2,27 +2,31 @@ export function calcMesesDecimoTerceiro(
   dataAdmissao: string,
   dataDemissao: string
 ) {
-  //trabalhador tem direito a 1/12 do 13º salário para cada mês completo trabalhado no ano da demissão.
   const admissao = new Date(dataAdmissao);
   const demissao = new Date(dataDemissao);
 
-  const anoDemissao = demissao.getFullYear();
+  // 🧠 Se o funcionário foi admitido e demitido no mesmo mês e ano:
+  if (
+    admissao.getFullYear() === demissao.getFullYear() &&
+    admissao.getMonth() === demissao.getMonth()
+  ) {
+    const diasTrabalhados = demissao.getDate() - admissao.getDate() + 1;
+    if (diasTrabalhados < 15) return 0; // Sai da função imediatamente
+  }
 
+  const anoDemissao = demissao.getFullYear();
   const mesInicio =
     admissao.getFullYear() === anoDemissao ? admissao.getMonth() + 1 : 1;
-  const mesFim = demissao.getMonth() + 1; //Porque getMonth retorna os meses de 0-11 onde 0 é janeiro e 11 é dezembro
+  const mesFim = demissao.getMonth() + 1;
   const diaDemissao = demissao.getDate();
 
   let mesesTrabalhados = mesFim - mesInicio + 1;
-  //Se tiver mais de 14 dias no último mês, conta como mês cheio.
 
-  // Se o mes da demissao teve 15 dias ou mais de trabalho, adiciona mais 1 mes
+  // Se o mês da demissão teve menos de 15 dias trabalhados, não conta
   if (diaDemissao < 15) mesesTrabalhados -= 1;
 
-  // Correção caso  o funcionario tenha sido demitido no fim do ano anterior
-  if (mesesTrabalhados < 0) mesesTrabalhados += 12;
+  if (mesesTrabalhados < 0) mesesTrabalhados = 0;
 
   console.log(mesesTrabalhados)
-
   return mesesTrabalhados;
 }
