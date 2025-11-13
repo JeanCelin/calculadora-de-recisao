@@ -41,6 +41,3 @@ function calc(
   return total;
 }
 
-console.log(
-calc(sal, feriasVencidas, dts, mesesTrabalhadosAno, mesesTrabalhadosDepoisFerias)
-);

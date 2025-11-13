@@ -1,34 +1,23 @@
+import { Recisao } from "../types/recisao";
 
-
-type Ferias = {
-  feriasProporcionais: boolean;
-  feriasVencidas: boolean;
-}
-
-type Demissao = {
-  saldoSalario: boolean;
-  decimoTerceiro: boolean;
-  fgts: boolean
+let recisao: Recisao = {
+  saldoSalario: false,
+  decimoTerceiro: false,
+  feriasProporcionais: false,
+  feriasVencidas: false,
+  fgts: false,
 };
 
-
-
-
-
-
 export default function TiposDeDemissao(tipoDemissao: string) {
-
-
-  if (tipoDemissao === 'pedidoPeloFuncionario') {
-    const calc: Demissao & Ferias = {
+  if (tipoDemissao === "pedidoPeloFuncionario") {
+    recisao = {
       saldoSalario: true,
       decimoTerceiro: true,
       feriasProporcionais: true,
       feriasVencidas: false,
-      fgts: false
+      fgts: false,
     };
-    return calc;
+    return recisao;
   }
-
-
+  return recisao
 }

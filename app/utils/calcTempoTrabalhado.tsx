@@ -8,10 +8,7 @@ export function calcTempoTrabalhado(inicio: string, fim: string) {
   let meses = dataFim.getMonth() - dataInicio.getMonth();
   let dias = dataFim.getDate() - dataInicio.getDate();
 
-  console.log(`-------------- Calc tempoTrabalhado ------------`)
 
-  console.log(`Calculo dos meses de trabalho ${meses}`)
-  console.log(`----------Fim da Operação ----------------------`)
 
   if (dias < 0) {
     meses -= 1;

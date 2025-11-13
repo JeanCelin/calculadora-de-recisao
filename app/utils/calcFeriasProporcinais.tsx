@@ -22,10 +22,10 @@ export function feriasProporcionais(
   tempoTrabalhado: TempoTrabalhado
 ) {
   const { meses, dias } = tempoTrabalhado
-  console.log(`---------------Calc ferias Proporcionais ---------------`)
+
   //Calculo para arredondar os numero de mes trabalhado
   let mesesServRond = dias > 14 ? meses + 1 : meses;
-  console.log(`Porpriedades recebidas: salario: ${salario}, tempoTrabalhado ${tempoTrabalhado.meses}`)
+
 
   // Não existem meses maiores que 12, essa condição evita input errado e "puxa" o numero de meses para 12 caso maior.
   if (mesesServRond > 12) mesesServRond = 12;
