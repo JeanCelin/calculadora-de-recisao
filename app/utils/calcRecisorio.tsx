@@ -5,6 +5,7 @@ import { feriasVencidas } from "./calcFeriasVencidas";
 import { saldoSalario } from "./calcSaldoSalario";
 import { decimoTerceiro } from "./calcDecimoTerceiro";
 import TiposDeDemissao from "./tipoDeDemissao";
+import CalcFGTS from "./calcFGTS";
 
 // O CalcRecisorio esta recebendo os valores de Page (Mais pra frente do input)
 
@@ -15,7 +16,7 @@ export default function CalcRecisorio(
   faltas: number,
   pedidoDemissao: string
 ) {
-// Calcular o tempo total Trabalhado em ano meses e dias
+  // Calcular o tempo total Trabalhado em ano meses e dias
   const tempoTrabalhado = calcTempoTrabalhado(dataAdmissao, dataDemissao);
 
   // Pega o tipo de pedido de demissao, e retorna quais funções de calculo serão chamadas
@@ -24,10 +25,9 @@ export default function CalcRecisorio(
   // O aviso prévio virá de um input dedicado
   const avisoPrevioVar = true;
 
-
   /* -------------------------------------------------------------------------------------------------------------------------------------- */
 
-// Chama das funções de acordo com o dadosDemissao, que recebe os booleans de TipoDeDemissao
+  // Chama das funções de acordo com o dadosDemissao, que recebe os booleans de TipoDeDemissao
   if (!dadosDemissao) {
     throw new Error("Erro na busca dos dados da demissão");
   }
@@ -58,20 +58,9 @@ export default function CalcRecisorio(
     return console.log(
       `Aviso prévio R$ = ${avisoPrevio(salario, tempoTrabalhado)}`
     );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  if (dadosDemissao.fgts) {
+    return console.log(`FGTS = R$ ${CalcFGTS(salario, tempoTrabalhado)}`);
+  }
 
   // console.log(
   //   `tempo trabalhado: ${tempoTrabalhado.anos} anos ${tempoTrabalhado.meses} meses ${tempoTrabalhado.dias} dias`

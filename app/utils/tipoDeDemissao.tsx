@@ -1,14 +1,19 @@
 
 
 type Ferias = {
-  feriasProporcionais?: boolean;
-  feriasVencidas?: boolean;
+  feriasProporcionais: boolean;
+  feriasVencidas: boolean;
 }
 
 type Demissao = {
-  saldoSalario?: boolean;
-  decimoTerceiro?: boolean;
+  saldoSalario: boolean;
+  decimoTerceiro: boolean;
+  fgts: boolean
 };
+
+
+
+
 
 
 export default function TiposDeDemissao(tipoDemissao: string) {
@@ -20,6 +25,7 @@ export default function TiposDeDemissao(tipoDemissao: string) {
       decimoTerceiro: true,
       feriasProporcionais: true,
       feriasVencidas: false,
+      fgts: false
     };
     return calc;
   }
