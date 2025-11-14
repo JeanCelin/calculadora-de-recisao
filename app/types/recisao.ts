@@ -1,9 +1,9 @@
-
 export type Recisao = {
   saldoSalario: boolean;
-  decimoTerceiro: boolean;
-  fgts: boolean;
-    feriasProporcionais: boolean;
+  feriasProporcionais: boolean;
   feriasVencidas: boolean;
+  decimoTerceiro: boolean;
+  fgtsCalc: boolean;
+  fgtsSaque: boolean;
+  fgtsMulta: boolean;
 };
-

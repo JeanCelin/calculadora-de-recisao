@@ -2,7 +2,7 @@ type TempoTrabalhado = {
   anos: number;
   meses: number;
   dias: number;
-}
+};
 
 /* 
 Regras
@@ -16,25 +16,23 @@ Se o trabalhador não completou o mês inteiro, a regra é:
 - Se trabalhou menos de 15 dias, não conta.
 */
 
-
 export function feriasProporcionais(
   salario: number,
   tempoTrabalhado: TempoTrabalhado
 ) {
-  const { meses, dias } = tempoTrabalhado
+  const { meses, dias } = tempoTrabalhado;
 
   //Calculo para arredondar os numero de mes trabalhado
   let mesesServRond = dias > 14 ? meses + 1 : meses;
 
-
   // Não existem meses maiores que 12, essa condição evita input errado e "puxa" o numero de meses para 12 caso maior.
   if (mesesServRond > 12) mesesServRond = 12;
-
+  
   // Calculo da proporção das ferias
   const ferias = (salario / 12) * mesesServRond;
 
+
   // Sobra a proporção com o valor das férias
-  const feriasProp = ferias * 4/3;
-  
+  const feriasProp = (ferias * 4) / 3;
   return feriasProp.toFixed(2);
 }

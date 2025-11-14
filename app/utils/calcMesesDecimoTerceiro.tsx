@@ -27,6 +27,5 @@ export function calcMesesDecimoTerceiro(
 
   if (mesesTrabalhados < 0) mesesTrabalhados = 0;
 
-  console.log(mesesTrabalhados)
   return mesesTrabalhados;
 }

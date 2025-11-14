@@ -1,6 +1,6 @@
-export enum AvisoPrevio {
-  IndenizadoPeloEmpregador = "INDENIZADO PELO EMPREGADOR",
-  Trabalhado = "TRABALHADO",
-  NaoCumpridoPeloEmpregado = "NÃO CUMPRIDO PELO EMPREGADO",
-  Dispensado = "DISPENSADO"
-}
+export type AvisoPrevio = {
+  IndenizadoPeloEmpregador: boolean;
+  Trabalhado: boolean;
+  NaoCumpridoPeloEmpregado: boolean;
+  Dispensado: boolean;
+};
