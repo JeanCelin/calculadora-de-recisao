@@ -1,3 +1,4 @@
+'use client'
 import About from "./components/About";
 import CalcRecisorio from "./utils/calcRecisorio";
 

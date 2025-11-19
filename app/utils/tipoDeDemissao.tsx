@@ -1,7 +1,7 @@
 import { Recisao } from "../types/recisao";
-import { TipoDemissao } from "../types/tiposDemissao";
+import { TiposDemissao } from "../types/tiposDemissao";
 
-export default function TiposDeDemissao(tipoDemissao: TipoDemissao) {
+export default function TiposDeDemissao(tipoDemissao: TiposDemissao) {
   let recisao: Recisao = {
     saldoSalario: false,
     decimoTerceiro: false,
@@ -12,7 +12,7 @@ export default function TiposDeDemissao(tipoDemissao: TipoDemissao) {
     feriasVencidas: false,
   };
 
-  if (tipoDemissao === TipoDemissao.pedido) {
+  if (tipoDemissao === TiposDemissao.pedido) {
     recisao = {
       saldoSalario: true,
       decimoTerceiro: true,
@@ -23,7 +23,7 @@ export default function TiposDeDemissao(tipoDemissao: TipoDemissao) {
       feriasVencidas: false,
     };
   }
-  if (tipoDemissao === TipoDemissao.justa) {
+  if (tipoDemissao === TiposDemissao.justa) {
     recisao = {
       saldoSalario: true,
       decimoTerceiro: true,
@@ -34,7 +34,7 @@ export default function TiposDeDemissao(tipoDemissao: TipoDemissao) {
       feriasVencidas: false,
     };
   }
-  if (tipoDemissao === TipoDemissao.semJusta) {
+  if (tipoDemissao === TiposDemissao.semJusta) {
     recisao = {
       saldoSalario: true,
       decimoTerceiro: true,
