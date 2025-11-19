@@ -1,5 +1,5 @@
-import { decimoTerceiro } from "./calcDecimoTerceiro";
-import { saldoSalario } from "./calcSaldoSalario";
+import { decimoTerceiro } from "../decimo-terceiro/calc-decimo-terceiro";
+import { saldoSalario } from "../saldo-salario/calc-saldo-salario";
 
 type TempoTrabalhado = {
   anos: number;
@@ -14,7 +14,7 @@ export default function CalcFGTS(
   dataDemissao: string,
   fgtsSaque: boolean,
   fgtsCalc: boolean,
-  fgtsMulta: boolean,
+  fgtsMulta: boolean
 ) {
   const { anos, meses } = tempoTrabalhado;
   const taxaFGTS = 0.08;

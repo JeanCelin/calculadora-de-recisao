@@ -1,10 +1,10 @@
 import type { Recisao } from "@/app/types/recisao";
 import type { TempoTrabalhado } from "../types/tempoTrabalhado";
-import { decimoTerceiro } from "./calcDecimoTerceiro";
-import { feriasProporcionais } from "./calcFeriasProporcinais";
-import { feriasVencidas } from "./calcFeriasVencidas";
-import CalcFGTS from "./calcFGTS";
-import { saldoSalario } from "./calcSaldoSalario";
+import { decimoTerceiro } from "./decimo-terceiro/calc-decimo-terceiro";
+import { feriasProporcionais } from "./ferias/calc-ferias-proporcinais";
+import { feriasVencidas } from "./ferias/calc-ferias-vencidas";
+import CalcFGTS from "./fgts/calc-fgts";
+import { saldoSalario } from "./saldo-salario/calc-saldo-salario";
 import { AvisoPrevio } from "../types/avisoPrevio";
 
 export default function calcCondicional(
@@ -22,10 +22,8 @@ export default function calcCondicional(
   console.log(
     `---------------Calculo Recisório----------------------------------------`
   );
-  console.log(
-    `---------Verbas Recisórias--------`
-  );
-  
+  console.log(`---------Verbas Recisórias--------`);
+
   if (recisao.saldoSalario || aviso.NaoCumpridoPeloEmpregado) {
     arrayCalc.push(saldoSalario(salario, dataDemissao, faltas));
     console.log(
@@ -33,7 +31,7 @@ export default function calcCondicional(
     );
   }
 
-    if (recisao.feriasProporcionais || aviso.NaoCumpridoPeloEmpregado) {
+  if (recisao.feriasProporcionais || aviso.NaoCumpridoPeloEmpregado) {
     arrayCalc.push(feriasProporcionais(salario, tempoTrabalhado));
     console.log(
       ` --- Ferias Proporcionais R$ ${feriasProporcionais(
@@ -44,12 +42,9 @@ export default function calcCondicional(
   }
   if (recisao.feriasVencidas || aviso.NaoCumpridoPeloEmpregado) {
     arrayCalc.push(feriasVencidas(salario, periodos));
-    console.log(
-      ` --- Ferias Vencidas R$ ${feriasVencidas(salario, periodos)}`
-    );
+    console.log(` --- Ferias Vencidas R$ ${feriasVencidas(salario, periodos)}`);
   }
 
-  
   if (recisao.decimoTerceiro || aviso.NaoCumpridoPeloEmpregado) {
     arrayCalc.push(Number(decimoTerceiro(salario, dataAdmissao, dataDemissao)));
     console.log(
@@ -59,10 +54,7 @@ export default function calcCondicional(
     );
   }
 
-  console.log(
-    `---------Calculo FGTS--------`
-  );
-  
+  console.log(`---------Calculo FGTS--------`);
 
   if (recisao.fgtsCalc) {
     const fgts = CalcFGTS(
@@ -98,10 +90,7 @@ export default function calcCondicional(
     (acumulador, valorAtual) => acumulador + valorAtual,
     0
   );
-    console.log(
-    `---------Total a Receber--------`
-  );
-  
+  console.log(`---------Total a Receber--------`);
 
   console.log(`Total R$ ${total.toFixed(2)}`);
 

@@ -1,14 +1,12 @@
-import { dataLocalBrasil } from "./dataLocalBrasil";
+import { dataLocalBrasil } from "../conversor-data/data-local-brasil";
 
 export function calcTempoTrabalhado(inicio: string, fim: string) {
-  const dataInicio = dataLocalBrasil(inicio)
-  const dataFim = dataLocalBrasil(fim)
+  const dataInicio = dataLocalBrasil(inicio);
+  const dataFim = dataLocalBrasil(fim);
 
   let anos = dataFim.getFullYear() - dataInicio.getFullYear();
   let meses = dataFim.getMonth() - dataInicio.getMonth();
   let dias = dataFim.getDate() - dataInicio.getDate();
-
-
 
   if (dias < 0) {
     meses -= 1;

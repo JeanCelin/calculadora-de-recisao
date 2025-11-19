@@ -1,4 +1,4 @@
-import { dataLocalBrasil } from "./dataLocalBrasil";
+import { dataLocalBrasil } from "../conversor-data/data-local-brasil";
 
 export function saldoSalario(
   salario: number,
@@ -16,6 +16,4 @@ export function saldoSalario(
   } else {
     return (diasTrabalhados = valorDoDia * diaDaDemissao).toFixed(2);
   }
-
-
 }

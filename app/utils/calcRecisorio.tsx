@@ -1,4 +1,4 @@
-import { calcTempoTrabalhado } from "./calcTempoTrabalhado";
+import { calcTempoTrabalhado } from "./tempo-trabalhado/calc-tempo-trabalhado";
 import calcCondicional from "./calcCondicional";
 import TiposDeDemissao from "./tipoDeDemissao";
 import { AvisoPrevio } from "../types/avisoPrevio";
@@ -10,15 +10,15 @@ export default function CalcRecisorio(
   dataDemissao: string,
   salario: number,
   faltas: number,
-  periodos: number,
+  periodos: number
 ) {
   // Calcular o tempo total Trabalhado em ano meses e dias
   const tempoTrabalhado = calcTempoTrabalhado(dataAdmissao, dataDemissao);
-  const recisao = TiposDeDemissao(TipoDemissao.pedido);
+  const recisao = TiposDeDemissao(TipoDemissao.justa);
 
   const aviso: AvisoPrevio = {
     IndenizadoPeloEmpregador: false,
-    Trabalhado: false,
+    Trabalhado: true,
     NaoCumpridoPeloEmpregado: false,
     Dispensado: false,
   };
@@ -33,5 +33,4 @@ export default function CalcRecisorio(
     periodos,
     aviso
   );
-
 }

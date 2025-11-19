@@ -28,7 +28,7 @@ export default function TiposDeDemissao(tipoDemissao: TipoDemissao) {
       saldoSalario: true,
       decimoTerceiro: true,
       feriasProporcionais: true,
-      fgtsCalc: false,
+      fgtsCalc: true,
       fgtsSaque: false,
       fgtsMulta: false,
       feriasVencidas: false,
