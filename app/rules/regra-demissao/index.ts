@@ -6,11 +6,12 @@ import Pedido from "./pedido";
 
 export default function RegrasDemissao(
   tiposDemissao: TiposDemissao,
-  tiposAviso: TiposAviso
+  tiposAviso: TiposAviso,
+
 ) {
   let calculo;
   if (tiposDemissao === "PEDIDO") {
-    calculo = Pedido();
+    calculo = Pedido(tiposAviso);
     return console.log(calculo)
   }
   return calculo;

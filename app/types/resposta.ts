@@ -1,5 +1,6 @@
 export type Resposta = {
     demissao: string,
+    aviso: string,
     verbas: {
       saldoSalario: number,
       feriasProps: number,
@@ -11,6 +12,7 @@ export type Resposta = {
       fgtsDepositado: number | boolean,
       fgtsSaldoSalario: number | boolean,
       fgtsDecimoTerceiro: number | boolean,
-      fgtsMulta: number | boolean
+      fgtsMulta: number | boolean,
+      fgtsTotalSaque: number | boolean,
     }
 }

@@ -9,7 +9,7 @@ type Dados = {
   dataDemissao: string;
   salario: number;
   faltas: number;
-  periodos: number;
+  feriasVencidasPeriodos: number;
   aviso: TiposAviso;
   demissao: TiposDemissao;
 };
@@ -20,7 +20,7 @@ const dadosPadrao: Dados = {
   dataDemissao: "2025-11-13",
   salario: 10000,
   faltas: 0, // Faltas Injustificadas desconta do saldo do salario
-  periodos: 0,
+  feriasVencidasPeriodos: 1,
   demissao: TiposDemissao.pedido,
   aviso: TiposAviso.trabalhado,
 };
