@@ -8,6 +8,7 @@ import { feriasVencidas } from "@/app/utils/ferias/calc-ferias-vencidas";
 import { CalcUmTercoFerias } from "@/app/utils/ferias/calc-um-terco-ferias";
 import Fgts from "@/app/utils/fgts";
 import { saldoSalario } from "@/app/utils/saldo-salario/calc-saldo-salario";
+import { Resposta } from "@/app/types/resposta";
 
 
 export default function Pedido() {
@@ -21,6 +22,8 @@ export default function Pedido() {
 
   const { fgtsDepositado, fgtsSaldoSalario, fgtsDecimoTerceiro } = Fgts();
   const feriasUmTerco = CalcUmTercoFerias(feriasProporcionaisReceber)
+
+
   console.log(`------------------Demissao Pedida------------------`);
   console.log(`Saldo salário: R$${saldoSalarioReceber}`);
   console.log(`Férias Proporciais: R$${feriasProporcionaisReceber}`);
@@ -32,5 +35,23 @@ export default function Pedido() {
   console.log(`FGTS Depositado: R$${fgtsDepositado}`);
   console.log(`FGTS Saldo Salario: R$${fgtsSaldoSalario}`);
   console.log(`FGTS Décimo Terceiro: R$${fgtsDecimoTerceiro}`);
-  
+
+  const calculo: Resposta =  {
+    demissao: "pedido",
+    verbas: {
+      saldoSalario: saldoSalarioReceber,
+      feriasProps: feriasProporcionaisReceber,
+      umTercoFerias: feriasUmTerco,
+      feriasVencidas: false,
+      decimoTerceiroSalario: decimoTerceiroSalario,
+    },
+    fgts: {
+      fgtsDepositado: fgtsDepositado,
+      fgtsSaldoSalario: fgtsSaldoSalario,
+      fgtsDecimoTerceiro: fgtsDecimoTerceiro,
+      fgtsMulta: false
+    }
+  }
+  return calculo
+
 }

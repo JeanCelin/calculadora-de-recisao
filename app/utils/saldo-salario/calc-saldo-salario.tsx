@@ -12,8 +12,8 @@ export function saldoSalario(
 
   if (faltas) {
     diasTrabalhados = valorDoDia * (diaDaDemissao - faltas);
-    return diasTrabalhados.toFixed(2);
+    return Number(diasTrabalhados.toFixed(2));
   } else {
-    return (diasTrabalhados = valorDoDia * diaDaDemissao).toFixed(2);
+    return Number((diasTrabalhados = valorDoDia * diaDaDemissao).toFixed(2));
   }
 }

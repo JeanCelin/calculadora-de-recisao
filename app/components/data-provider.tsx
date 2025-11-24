@@ -3,6 +3,7 @@
 import { createContext, useContext } from "react";
 import { TiposAviso } from "../types/tiposAviso";
 import { TiposDemissao } from "../types/tiposDemissao";
+
 type Dados = {
   dataAdmissao: string;
   dataDemissao: string;

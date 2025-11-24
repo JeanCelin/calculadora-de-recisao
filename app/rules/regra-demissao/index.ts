@@ -11,6 +11,7 @@ export default function RegrasDemissao(
   let calculo;
   if (tiposDemissao === "PEDIDO") {
     calculo = Pedido();
+    return console.log(calculo)
   }
   return calculo;
 }
