@@ -9,5 +9,5 @@ export function DecimoTerceiro() {
   );
   const decimoTerceiro = (salario / 12) * mesesTrabalhadosNoAno;
 
-  return decimoTerceiro.toFixed(2);
+  return Number(decimoTerceiro.toFixed(2));
 }

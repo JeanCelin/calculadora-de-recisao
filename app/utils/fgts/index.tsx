@@ -12,13 +12,13 @@ export default function Fgts() {
 
 
   const tempoTrabalhado = calcTempoTrabalhado(dataAdmissao, dataDemissao)
-  const fgtsBase = CalcFGTS(tempoTrabalhado, taxaFGTS)
-  const fgtsSaldoSalario = FgtsSaldoSalario(fgtsBase, taxaFGTS)
-  const fgtsMulta = FgtsMulta(fgtsBase,fgtsSaldoSalario, taxaFGTS)
+  const fgtsDepositado = CalcFGTS(tempoTrabalhado, taxaFGTS)
+  const fgtsSaldoSalario = FgtsSaldoSalario(taxaFGTS)
+  const fgtsMulta = FgtsMulta(fgtsDepositado,fgtsSaldoSalario, taxaFGTS)
   const fgtsDecimoTerceiro =   FgtsDecimoTerceiro(taxaFGTS)
-  const fgtsSaque = FgtsTotalSaque(fgtsBase,fgtsSaldoSalario, fgtsDecimoTerceiro, fgtsMulta)
+  const fgtsSaque = FgtsTotalSaque(fgtsDepositado,fgtsSaldoSalario, fgtsDecimoTerceiro, fgtsMulta)
 
   return (
-    {fgtsBase, fgtsSaldoSalario, fgtsDecimoTerceiro, fgtsMulta, fgtsSaque}
+    {fgtsDepositado, fgtsSaldoSalario, fgtsDecimoTerceiro, fgtsMulta, fgtsSaque}
   )
 }
