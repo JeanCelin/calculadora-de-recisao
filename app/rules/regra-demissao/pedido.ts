@@ -10,23 +10,25 @@ import Fgts from "@/app/utils/fgts";
 import { saldoSalario } from "@/app/utils/saldo-salario/calc-saldo-salario";
 import { Resposta } from "@/app/types/resposta";
 import { TiposAviso } from "@/app/types/tiposAviso";
+import { calcularDescontoINSS } from "@/app/utils/inss/calc-desconto.inss";
 
 
 export default function Pedido(tiposAviso: TiposAviso, ) {
   const { salario, dataDemissao, faltas, feriasVencidasPeriodos } = useDados();
 
+  // Verbas Recisórias
   const saldoSalarioReceber = saldoSalario(salario, dataDemissao, faltas);
-  const decimoTerceiroSalario = DecimoTerceiro();
-  // const feriasVencidasReceber = CalcferiasVencidas(salario, feriasVencidasPeriodos); // Se tiver
-  const feriasProporcionaisReceber = FeriasProporcionais(
-  );
-
-  const { fgtsDepositado, fgtsSaldoSalario, fgtsDecimoTerceiro, fgtsMulta, fgtsTotalSaque } = Fgts();
+  const feriasProporcionaisReceber = FeriasProporcionais();
   const feriasUmTerco = CalcUmTercoFerias(feriasProporcionaisReceber)
- 
   const feriasVencidasReceber = feriasVencidasPeriodos ? CalcferiasVencidas(salario, feriasVencidasPeriodos) : 0;
+  const decimoTerceiroSalario = DecimoTerceiro();
 
+  //FGTS
+  const { fgtsDepositado, fgtsSaldoSalario, fgtsDecimoTerceiro, fgtsMulta, fgtsTotalSaque } = Fgts();
 
+  //Descontos
+  
+  const inss = calcularDescontoINSS(salario)
 
   console.log(`------------------Demissao Pedida------------------`);
   console.log(`Saldo salário: R$${saldoSalarioReceber}`);
@@ -56,6 +58,9 @@ export default function Pedido(tiposAviso: TiposAviso, ) {
       fgtsDecimoTerceiro: fgtsDecimoTerceiro,
       fgtsMulta: fgtsMulta,
       fgtsTotalSaque: fgtsTotalSaque,
+    },
+    descontos: {
+      inss: inss
     }
   }
   return calculo

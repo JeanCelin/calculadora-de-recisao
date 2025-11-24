@@ -15,4 +15,7 @@ export type Resposta = {
       fgtsMulta: number | boolean,
       fgtsTotalSaque: number | boolean,
     }
+    descontos: {
+      inss: number | boolean,
+    }
 }
