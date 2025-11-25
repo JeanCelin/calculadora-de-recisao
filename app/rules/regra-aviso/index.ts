@@ -1,7 +1,9 @@
+import { TiposAviso } from "@/app/types/tiposAviso";
+import AvisoTrabalhado from "./trabalhado";
 
-
-
-
+export function aviso(tipoAviso: TiposAviso, salario: number, diasAviso: number) {
+  if (tipoAviso === "TRABALHADO") AvisoTrabalhado(salario, diasAviso);
+}
 
 /* Aviso Prévio Indenizado
 
@@ -46,26 +48,6 @@ determinar se completou novo período aquisitivo
 Não há salário no período do aviso, porque não foi trabalhado.
 */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* Aviso Prévio Não Cumprido
 
 O empregado pede demissão e não quer cumprir o aviso.
@@ -76,20 +58,6 @@ Descontar o valor equivalente ao aviso na rescisão.
 Valor descontado = salário do período do aviso.
 
 Esse aqui é o famoso: “o funcionário some e o RH chora no Excel”. */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* Aviso Prévio Dispensado Pelo Empregador (Informação criada por mim)
 

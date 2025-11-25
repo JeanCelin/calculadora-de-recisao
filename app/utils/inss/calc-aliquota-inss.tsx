@@ -16,7 +16,6 @@ export function calcularAliquotaINSS(salario: number) {
   const aliquota = faixa.aliquota
   const deduzir = faixa.deduzir
 
-  console.log(`Alíquota INSS ${faixa.aliquota}`)
 
-  return {aliquota, deduzir}
+  return {salario,aliquota, deduzir}
 }

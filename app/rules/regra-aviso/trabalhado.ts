@@ -12,6 +12,9 @@ Pode haver redução de jornada:
 
 7 dias corridos a menos no fim. */
 
-export default function AvisoTrabalhado (){
-  return Number(0)
+export default function AvisoTrabalhado(salario: number, diasAviso: number = 30) {
+  if (salario && diasAviso) {
+    const aviso: number = (salario / 30) * diasAviso;
+    return Number(aviso);
+  }
 }

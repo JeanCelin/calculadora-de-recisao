@@ -11,6 +11,7 @@ type Dados = {
   faltas: number;
   feriasVencidasPeriodos: number;
   aviso: TiposAviso;
+  diasAviso: number;
   demissao: TiposDemissao;
 };
 
@@ -23,6 +24,7 @@ const dadosPadrao: Dados = {
   feriasVencidasPeriodos: 1,
   demissao: TiposDemissao.pedido,
   aviso: TiposAviso.trabalhado,
+  diasAviso: 30,
 };
 
 

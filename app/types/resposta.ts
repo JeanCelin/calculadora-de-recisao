@@ -7,6 +7,7 @@ export type Resposta = {
       umTercoFerias: number,
       feriasVencidas: number | boolean,
       decimoTerceiroSalario: number | boolean,
+      totalVerbas: number,
     },
     fgts: {
       fgtsDepositado: number | boolean,
@@ -15,7 +16,11 @@ export type Resposta = {
       fgtsMulta: number | boolean,
       fgtsTotalSaque: number | boolean,
     }
-    descontos: {
+    deducao: {
       inss: number | boolean,
+      inssDecimoTerceiro: number| boolean,
+      irrf: number | boolean,
+      totalDeducao: number | boolean,
     }
+    totalLiquido: number
 }
