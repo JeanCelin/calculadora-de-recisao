@@ -18,12 +18,12 @@ type Dados = {
 
 const dadosPadrao: Dados = {
   dataAdmissao: "2024-01-01",
-  dataDemissao: "2025-11-13",
+  dataDemissao: "2026-12-31",
   salario: 10000,
   faltas: 0, // Faltas Injustificadas desconta do saldo do salario
-  feriasVencidasPeriodos: 1,
+  feriasVencidasPeriodos: 0,
   demissao: TiposDemissao.pedido,
-  aviso: TiposAviso.trabalhado,
+  aviso: TiposAviso.naoCumprido,
   diasAviso: 30,
 };
 

@@ -7,7 +7,7 @@ import FgtsSaldoSalario from "./calc-fgts-saldo-salario";
 
 import { somar } from "../somar";
 
-export default function Fgts() {
+export default function Fgts(saque: boolean, multa: boolean) {
   const { dataAdmissao, dataDemissao } = useDados();
   const taxaFGTS = 0.08;
 
@@ -15,17 +15,25 @@ export default function Fgts() {
   const fgtsDepositado = CalcFGTS(tempoTrabalhado, taxaFGTS);
   const fgtsSaldoSalario = FgtsSaldoSalario(taxaFGTS);
   const fgtsDecimoTerceiro = FgtsDecimoTerceiro(taxaFGTS);
-  const fgtsMulta = FgtsMulta(
-    fgtsDepositado,
-    fgtsSaldoSalario,
-    fgtsDecimoTerceiro
-  );
-  const fgtsTotalSaque = somar(
-    fgtsDepositado,
-    fgtsSaldoSalario,
-    fgtsDecimoTerceiro,
-    fgtsMulta
-  );
+
+  let fgtsMulta;
+  let fgtsTotalSaque;
+
+  if (multa) {
+    fgtsMulta = FgtsMulta(fgtsDepositado, fgtsSaldoSalario, fgtsDecimoTerceiro);
+  } else {
+    fgtsMulta = Number(0);
+  }
+  if (saque) {
+    fgtsTotalSaque = somar(
+      fgtsDepositado,
+      fgtsSaldoSalario,
+      fgtsDecimoTerceiro,
+      fgtsMulta
+    );
+  } else {
+    fgtsTotalSaque = Number(0);
+  }
 
   return {
     fgtsDepositado,

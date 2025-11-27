@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { useDados } from "@/app/components/data-provider";
 
@@ -9,70 +9,92 @@ import { CalcUmTercoFerias } from "@/app/utils/ferias/calc-um-terco-ferias";
 import Fgts from "@/app/utils/fgts";
 import { saldoSalario } from "@/app/utils/saldo-salario/calc-saldo-salario";
 import { Resposta } from "@/app/types/resposta";
-import { TiposAviso } from "@/app/types/tiposAviso";
+
 import { calcularDescontoINSS } from "@/app/utils/inss/calc-desconto-inss";
 import { calcularDescontoIRRF } from "@/app/utils/irrf/calc-desconto-irrf";
 import { somar } from "@/app/utils/somar";
-import { aviso } from "../regra-aviso";
+import { Aviso } from "../regra-aviso";
 
-
-
-export default function Pedido(tiposAviso: TiposAviso ) {
-  const { salario, dataDemissao, faltas, feriasVencidasPeriodos, diasAviso } = useDados();
-
-//Aviso Previo
-  const tipoAviso = aviso(tiposAviso, salario, diasAviso)
-
-
-  // Verbas Recisórias
+export default function Pedido() {
+  const { salario, dataDemissao, faltas, feriasVencidasPeriodos, aviso } =
+    useDados();
+  /* Quando o funcionário pede demissão, ele tem direito a receber:
+    1) Saldo Salário;*/
   const saldoSalarioReceber = saldoSalario(salario, dataDemissao, faltas);
-  const feriasProporcionaisReceber = FeriasProporcionais();
-  const feriasUmTerco = CalcUmTercoFerias(feriasProporcionaisReceber)
-  const feriasVencidasReceber = feriasVencidasPeriodos ? CalcferiasVencidas(salario, feriasVencidasPeriodos) : 0;
-  const decimoTerceiroSalario = DecimoTerceiro();
-  const totalVerbas = somar(saldoSalarioReceber,decimoTerceiroSalario,feriasProporcionaisReceber,feriasUmTerco)
-
+  /*
+    2) Ferias Vencidas + 1/3; */
+    const feriasVencidasReceber = feriasVencidasPeriodos
+    ? CalcferiasVencidas(salario, feriasVencidasPeriodos)
+    : 0;
+    const feriasVencidasUmTerco = CalcUmTercoFerias(feriasVencidasReceber)
+    /*
+    3) Férias Proporcionais + 1/3; */
+    const feriasProporcionaisReceber = FeriasProporcionais();
+    const feriasPropsUmTerco = CalcUmTercoFerias(feriasProporcionaisReceber);
+    /*
+    4) 13º Salário Proporcional; */
+    const decimoTerceiroSalario = DecimoTerceiro();
+    /* 
+    5) Saldo FGTS depositado (O funcionário não recebe multa e não saca FGTS, mas o saldo continua lá.)
+    6) Depósito FGTS do mês da Recisão
+    */
+ const valorAviso = Aviso(); //Aviso Previo
   //FGTS
-  const { fgtsDepositado, fgtsSaldoSalario, fgtsDecimoTerceiro, fgtsMulta, fgtsTotalSaque } = Fgts();
+  const {
+    fgtsDepositado,
+    fgtsSaldoSalario,
+    fgtsDecimoTerceiro,
+    fgtsMulta,
+    fgtsTotalSaque,
+  } = Fgts(false, false);
+
+  /*
+    ------------------
+    Não tem direito:
+    1) Multa FGTS;
+    2) Saque do FGTS;
+    3) Seguro-Desemprego;
+    4) Aviso Prévio Indenizado (se o funcionário não trabalhar, ele PAGA a empresa);
+ */
+
+// Verbas Recisórias
+const totalVerbas = somar(
+  saldoSalarioReceber,
+  decimoTerceiroSalario,
+  feriasProporcionaisReceber,
+  feriasPropsUmTerco,
+  valorAviso
+  );
 
   //Deduções
-  const inss = calcularDescontoINSS(saldoSalarioReceber)
-  const inssDecimoTerceiro = calcularDescontoINSS(decimoTerceiroSalario)
-  const irrf = calcularDescontoIRRF(saldoSalarioReceber, decimoTerceiroSalario, inss, inssDecimoTerceiro, tiposAviso)
-  const totalDeducao = somar(salario, inss, inssDecimoTerceiro, irrf) * Number(-1)
+  const inss = calcularDescontoINSS(saldoSalarioReceber);
+  const inssDecimoTerceiro = calcularDescontoINSS(decimoTerceiroSalario);
+  const irrf = calcularDescontoIRRF(
+    saldoSalarioReceber,
+    decimoTerceiroSalario,
+    inss,
+    inssDecimoTerceiro,
+  );
+  const totalDeducao =
+    somar(valorAviso, inss, inssDecimoTerceiro, irrf) * Number(-1);
 
   //Total Geral
-  const totalLiquido = totalVerbas + fgtsTotalSaque + totalDeducao
-  console.log(`------------------Demissao Pedida------------------`);
-  console.log(`Saldo salário: R$${saldoSalarioReceber}`);
-  console.log(`Férias Proporciais: R$${feriasProporcionaisReceber}`);
-  console.log(`1/3 de Férias: R$${feriasUmTerco}`)
-  console.log(`Férias Vencidas: R$${feriasVencidasReceber}`);
-  console.log(`Décimo Terceiro Proporcional: R$${decimoTerceiroSalario}`);
-
-  console.log(`------------------FGTS------------------`)
-  console.log(`FGTS Depositado: R$${fgtsDepositado}`);
-  console.log(`FGTS Saldo Salario: R$${fgtsSaldoSalario}`);
-  console.log(`FGTS Décimo Terceiro: R$${fgtsDecimoTerceiro}`);
-
-  console.log(`------------------DESCONTOS------------------`)
-    console.log(`INSS: R$${inss}`);
-    console.log(`INSS 13º Salario: R$${inssDecimoTerceiro}`);
-    console.log(`IRRF ${irrf}`)
-    console.log(`Total de Dedução: ${totalDeducao}`)
+  const totalLiquido = totalVerbas + fgtsTotalSaque + totalDeducao;
 
 
-  console.log(`Total Liquido; R$${totalLiquido}`)
-    
-  const calculo: Resposta =  {
+
+  const calculo: Resposta = {
     demissao: "pedido",
-    aviso: tiposAviso,
+    aviso: aviso,
+
     verbas: {
       saldoSalario: saldoSalarioReceber,
-      feriasProps: feriasProporcionaisReceber,
-      umTercoFerias: feriasUmTerco,
       feriasVencidas: feriasVencidasReceber,
+      feriasVencidasUmTerco: feriasVencidasUmTerco,
+      feriasProps: feriasProporcionaisReceber,
+      feriasPropsUmTerco: feriasPropsUmTerco,
       decimoTerceiroSalario: decimoTerceiroSalario,
+      aviso: valorAviso,
       totalVerbas: totalVerbas,
     },
     fgts: {
@@ -83,13 +105,13 @@ export default function Pedido(tiposAviso: TiposAviso ) {
       fgtsTotalSaque: fgtsTotalSaque,
     },
     deducao: {
+      valorAviso: valorAviso,
       inss: inss,
       inssDecimoTerceiro: inssDecimoTerceiro,
       irrf: irrf,
       totalDeducao: totalDeducao,
     },
-    totalLiquido: totalLiquido
-  }
-  return calculo
-
+    totalLiquido: totalLiquido,
+  };
+  return calculo;
 }

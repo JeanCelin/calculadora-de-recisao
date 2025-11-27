@@ -1,4 +1,3 @@
-import { TiposAviso } from "@/app/types/tiposAviso";
 import { calcularAliquotaIRRF } from "./calc-aliquota-irrf";
 
 export function calcularDescontoIRRF(
@@ -6,7 +5,6 @@ export function calcularDescontoIRRF(
   decimoTerceiro: number,
   inss: number,
   inssDecimoTerceiro: number,
-  tiposAviso?: TiposAviso
 ): number {
   const totalINSS = inss + inssDecimoTerceiro;
 
