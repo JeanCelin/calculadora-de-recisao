@@ -6,8 +6,8 @@ export type Resposta = {
     saldoSalario: number;
     feriasVencidas: number;
     feriasVencidasUmTerco: number;
-    feriasProps: number;
-    feriasPropsUmTerco: number;
+    feriasProps: number | boolean;
+    feriasPropsUmTerco: number | boolean;
     decimoTerceiroSalario: number | boolean;
     aviso: number | boolean
     totalVerbas: number;
@@ -20,7 +20,7 @@ export type Resposta = {
     fgtsTotalSaque: number | boolean;
   };
   deducao: {
-    valorAviso: number;
+    valorAviso: number | boolean;
     inss: number | boolean;
     inssDecimoTerceiro: number | boolean;
     irrf: number | boolean;

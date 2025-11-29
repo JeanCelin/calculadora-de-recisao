@@ -1,11 +1,12 @@
 'use client'
-import { TiposDemissao } from "../types/tiposDemissao";
+
 
 import RegrasDemissao from "../rules/regra-demissao";
+import { useDados } from "../components/data-provider";
 
 export default function CalcRecisorio() {
-
-  RegrasDemissao(TiposDemissao.pedido);
+  const { demissao} = useDados()
+  RegrasDemissao(demissao);
 
   
 }

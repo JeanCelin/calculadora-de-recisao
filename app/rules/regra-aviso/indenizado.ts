@@ -80,3 +80,4 @@ O empregado vai embora sem cumprir.
 
 A empresa não desconta e não precisa pagar como indenizado.
 (Essa variação costuma aparecer mais na prática de RH do que na CLT seca.)*/
+

@@ -15,8 +15,8 @@ import { calcularDescontoIRRF } from "@/app/utils/irrf/calc-desconto-irrf";
 import { somar } from "@/app/utils/somar";
 import { Aviso } from "../regra-aviso";
 
-export default function Pedido() {
-  const { salario, dataDemissao, faltas, feriasVencidasPeriodos, aviso } =
+export default function JustaCausa() {
+  const { salario, dataDemissao, faltas, feriasVencidasPeriodos, aviso, demissao } =
     useDados();
   /* Quando o funcionário pede demissão, ele tem direito a receber:
     1) Saldo Salário;*/
@@ -29,8 +29,8 @@ export default function Pedido() {
     const feriasVencidasUmTerco = CalcUmTercoFerias(feriasVencidasReceber)
     /*
     3) Férias Proporcionais + 1/3; */
-    const feriasProporcionaisReceber = FeriasProporcionais();
-    const feriasPropsUmTerco = CalcUmTercoFerias(feriasProporcionaisReceber);
+    // const feriasProporcionaisReceber = FeriasProporcionais();
+    // const feriasPropsUmTerco = CalcUmTercoFerias(feriasProporcionaisReceber);
     /*
     4) 13º Salário Proporcional; */
     const decimoTerceiroSalario = DecimoTerceiro();
@@ -60,9 +60,6 @@ export default function Pedido() {
 // Verbas Recisórias
 const totalVerbas = somar(
   saldoSalarioReceber,
-  decimoTerceiroSalario,
-  feriasProporcionaisReceber,
-  feriasPropsUmTerco,
   valorAviso
   );
 
@@ -76,7 +73,7 @@ const totalVerbas = somar(
     inssDecimoTerceiro,
   );
   const totalDeducao =
-    somar(valorAviso, inss, inssDecimoTerceiro, irrf) * Number(-1);
+    somar(valorAviso, inss, inssDecimoTerceiro, irrf);
 
   //Total Geral
   const totalLiquido = totalVerbas + fgtsTotalSaque + (totalDeducao  * Number(-1));
@@ -84,16 +81,16 @@ const totalVerbas = somar(
 
 
   const calculo: Resposta = {
-    demissao: "pedido",
+    demissao: demissao,
     aviso: aviso,
 
     verbas: {
       saldoSalario: saldoSalarioReceber,
       feriasVencidas: feriasVencidasReceber,
       feriasVencidasUmTerco: feriasVencidasUmTerco,
-      feriasProps: feriasProporcionaisReceber,
-      feriasPropsUmTerco: feriasPropsUmTerco,
-      decimoTerceiroSalario: decimoTerceiroSalario,
+      feriasProps: false,
+      feriasPropsUmTerco: false,
+      decimoTerceiroSalario: false,
       aviso: valorAviso,
       totalVerbas: totalVerbas,
     },
