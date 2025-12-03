@@ -18,8 +18,7 @@ import { Aviso } from "../regra-aviso";
 export default function JustaCausa() {
   const { salario, dataDemissao, faltas, feriasVencidasPeriodos, aviso, demissao } =
     useDados();
-  /* Quando o funcionário pede demissão, ele tem direito a receber:
-    1) Saldo Salário;*/
+
   const saldoSalarioReceber = saldoSalario(salario, dataDemissao, faltas);
   /*
     2) Ferias Vencidas + 1/3; */
@@ -29,6 +28,7 @@ export default function JustaCausa() {
     const feriasVencidasUmTerco = CalcUmTercoFerias(feriasVencidasReceber)
     /*
     3) Férias Proporcionais + 1/3; */
+    // Demissão Por Justa Causa o funcionário perde o direito de ferias proporcionais
     // const feriasProporcionaisReceber = FeriasProporcionais();
     // const feriasPropsUmTerco = CalcUmTercoFerias(feriasProporcionaisReceber);
     /*
@@ -48,14 +48,6 @@ export default function JustaCausa() {
     fgtsTotalSaque,
   } = Fgts(false, false);
 
-  /*
-    ------------------
-    Não tem direito:
-    1) Multa FGTS;
-    2) Saque do FGTS;
-    3) Seguro-Desemprego;
-    4) Aviso Prévio Indenizado (se o funcionário não trabalhar, ele PAGA a empresa);
- */
 
 // Verbas Recisórias
 const totalVerbas = somar(
