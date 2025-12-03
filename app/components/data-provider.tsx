@@ -22,7 +22,7 @@ const dadosPadrao: Dados = {
   salario: 10000,
   faltas: 0, // Faltas Injustificadas desconta do saldo do salario
   feriasVencidasPeriodos: 0,
-  demissao: TiposDemissao.justaCausa,
+  demissao: TiposDemissao.semJustaCausa,
   aviso: TiposAviso.trabalhado,
   diasAviso: 30,
 };

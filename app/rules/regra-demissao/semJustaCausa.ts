@@ -3,7 +3,7 @@
 import { useDados } from "@/app/components/data-provider";
 
 import { DecimoTerceiro } from "@/app/utils/decimo-terceiro/calc-decimo-terceiro";
-
+import { FeriasProporcionais } from "@/app/utils/ferias/calc-ferias-proporcinais";
 import { CalcferiasVencidas } from "@/app/utils/ferias/calc-ferias-vencidas";
 import { CalcUmTercoFerias } from "@/app/utils/ferias/calc-um-terco-ferias";
 import Fgts from "@/app/utils/fgts";
@@ -15,8 +15,8 @@ import { calcularDescontoIRRF } from "@/app/utils/irrf/calc-desconto-irrf";
 import { somar } from "@/app/utils/somar";
 import { Aviso } from "../regra-aviso";
 
-export default function JustaCausa() {
-  const { salario, dataDemissao, faltas, feriasVencidasPeriodos, aviso, demissao } =
+export default function SemJustaCausa() {
+  const { salario, dataDemissao, faltas, feriasVencidasPeriodos, aviso } =
     useDados();
 
   const saldoSalarioReceber = saldoSalario(salario, dataDemissao, faltas);
@@ -28,16 +28,12 @@ export default function JustaCausa() {
     const feriasVencidasUmTerco = CalcUmTercoFerias(feriasVencidasReceber)
     /*
     3) Férias Proporcionais + 1/3; */
-    // Demissão Por Justa Causa o funcionário perde o direito de ferias proporcionais
-    // const feriasProporcionaisReceber = FeriasProporcionais();
-    // const feriasPropsUmTerco = CalcUmTercoFerias(feriasProporcionaisReceber);
+    const feriasProporcionaisReceber = FeriasProporcionais();
+    const feriasPropsUmTerco = CalcUmTercoFerias(feriasProporcionaisReceber);
     /*
     4) 13º Salário Proporcional; */
     const decimoTerceiroSalario = DecimoTerceiro();
-    /* 
-    5) Saldo FGTS depositado (O funcionário não recebe multa e não saca FGTS, mas o saldo continua lá.)
-    6) Depósito FGTS do mês da Recisão
-    */
+
  const valorAviso = Aviso(); //Aviso Previo
   //FGTS
   const {
@@ -46,12 +42,15 @@ export default function JustaCausa() {
     fgtsDecimoTerceiro,
     fgtsMulta,
     fgtsTotalSaque,
-  } = Fgts(false, false);
+  } = Fgts(true, true);
 
 
 // Verbas Recisórias
 const totalVerbas = somar(
   saldoSalarioReceber,
+  decimoTerceiroSalario,
+  feriasProporcionaisReceber,
+  feriasPropsUmTerco,
   valorAviso
   );
 
@@ -65,7 +64,7 @@ const totalVerbas = somar(
     inssDecimoTerceiro,
   );
   const totalDeducao =
-    somar(valorAviso, inss, inssDecimoTerceiro, irrf);
+    somar(valorAviso, inss, inssDecimoTerceiro, irrf) * Number(-1);
 
   //Total Geral
   const totalLiquido = totalVerbas + fgtsTotalSaque + (totalDeducao  * Number(-1));
@@ -73,16 +72,16 @@ const totalVerbas = somar(
 
 
   const calculo: Resposta = {
-    demissao: demissao,
+    demissao: "pedido",
     aviso: aviso,
 
     verbas: {
       saldoSalario: saldoSalarioReceber,
       feriasVencidas: feriasVencidasReceber,
       feriasVencidasUmTerco: feriasVencidasUmTerco,
-      feriasProps: false,
-      feriasPropsUmTerco: false,
-      decimoTerceiroSalario: false,
+      feriasProps: feriasProporcionaisReceber,
+      feriasPropsUmTerco: feriasPropsUmTerco,
+      decimoTerceiroSalario: decimoTerceiroSalario,
       aviso: valorAviso,
       totalVerbas: totalVerbas,
     },
