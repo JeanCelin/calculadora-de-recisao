@@ -1,16 +1,13 @@
-import { useDados } from "@/app/components/data-provider"
-
 type TempoTrabalhado = {
   anos: number;
   meses: number;
   dias: number;
 };
 
-export default function CalcFGTS(
-  tempoTrabalhado: TempoTrabalhado, taxaFGTS: number
+export function calcFGTS(
+  tempoTrabalhado: TempoTrabalhado, taxaFGTS: number, salario: number
 ) {
 
-  const {salario} = useDados()
   const { anos, meses } = tempoTrabalhado;
 
   

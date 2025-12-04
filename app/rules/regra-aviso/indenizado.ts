@@ -2,7 +2,7 @@
 import { Dados } from "@/app/types/dados";
 import { calcTempoTrabalhado } from "@/app/utils/tempo-trabalhado/calc-tempo-trabalhado";
 
-export function AvisoIndenizado(dados: Dados): number {
+export function avisoIndenizado(dados: Dados): number {
   const { salario, dataAdmissao, dataDemissao } = dados;
   const {dias, meses, anos} = calcTempoTrabalhado(dataAdmissao, dataDemissao);
   console.log(anos)

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
-import { DadosProvider } from "./components/data-provider";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,13 +29,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <DadosProvider>
+ 
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
           <Navbar />
           {children}
         </body>
-      </DadosProvider>
+ 
     </html>
   );
 }

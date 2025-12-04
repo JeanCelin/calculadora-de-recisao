@@ -1,15 +1,18 @@
 "use client";
 
 import { useDadosStore } from "../store/dados";
-import CalcRecisorio from "../utils/calcRecisorio";
 import { TiposAviso } from "../types/tiposAviso";
 import { TiposDemissao } from "../types/tiposDemissao";
-import { mapToTiposAviso, mapToTiposDemissao } from "../utils/mappers/form-mappers";
-import React, { FormEvent } from "react";
+import { calcRecisorio } from "../utils/calcRecisorio";
+import {
+  mapToTiposAviso,
+  mapToTiposDemissao,
+} from "../utils/mappers/form-mappers";
+
+import { FormEvent } from "react";
 
 export default function Form() {
   const setDados = useDadosStore((s) => s.setDados);
-
 
   interface DadosForm {
     dataAdmissao: string;
@@ -23,7 +26,10 @@ export default function Form() {
     feriasVencidasPeriodos: number;
   }
 
-  function toStringValue(value: FormDataEntryValue | null, field?: string): string {
+  function toStringValue(
+    value: FormDataEntryValue | null,
+    field?: string
+  ): string {
     if (typeof value === "string") return value;
     return "";
   }
@@ -34,8 +40,14 @@ export default function Form() {
 
     try {
       // validar/transformar
-      const dataAdmissao = toStringValue(form.get("dataAdmissao"), "dataAdmissao");
-      const dataDemissao = toStringValue(form.get("dataDemissao"), "dataDemissao");
+      const dataAdmissao = toStringValue(
+        form.get("dataAdmissao"),
+        "dataAdmissao"
+      );
+      const dataDemissao = toStringValue(
+        form.get("dataDemissao"),
+        "dataDemissao"
+      );
       const salarioRaw = form.get("salAtual");
       if (salarioRaw === null) throw new Error("Salário ausente");
       const salario = Number(salarioRaw);
@@ -52,7 +64,8 @@ export default function Form() {
         aviso,
         diasAviso: 30,
         demissao,
-        feriasVencidas: toStringValue(form.get("feriasVencidas")) === "Sim" ? 1 : 0,
+        feriasVencidas:
+          toStringValue(form.get("feriasVencidas")) === "Sim" ? 1 : 0,
         feriasVencidasPeriodos: 0,
       };
 
@@ -60,9 +73,7 @@ export default function Form() {
       setDados(dados);
 
       // calcular (pode ser sync ou async — aqui trato como sync)
-     CalcRecisorio(dados);
-
-      
+      calcRecisorio(dados);
     } catch (err) {
       // lide com erros de validação de forma amigável
       console.error("Erro ao processar formulário:", err);
@@ -144,6 +155,6 @@ export default function Form() {
       <button type="submit" className="btn btn-primary text-nowrap m-auto">
         Calcular
       </button>
-      </form>
-    );
-  }
+    </form>
+  );
+}

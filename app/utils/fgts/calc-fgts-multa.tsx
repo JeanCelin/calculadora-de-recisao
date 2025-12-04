@@ -1,4 +1,4 @@
-export default function FgtsMulta(
+export function calcFgtsMulta(
   fgtsDepositado: number,
   fgtsSaldoSalario: number,
   fgtsDecimoTerceiro: number

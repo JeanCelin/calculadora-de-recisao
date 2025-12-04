@@ -1,5 +1,5 @@
-import { useDados } from "@/app/components/data-provider";
 import { calcTempoTrabalhado } from "../tempo-trabalhado/calc-tempo-trabalhado";
+import { Dados } from "@/app/types/dados";
 
 /* 
 Regras
@@ -13,8 +13,8 @@ Se o trabalhador não completou o mês inteiro, a regra é:
 - Se trabalhou menos de 15 dias, não conta.
 */
 
-export function FeriasProporcionais(): number {
-  const { salario, dataAdmissao, dataDemissao } = useDados();
+export function feriasProporcionais(dados: Dados): number {
+  const { salario, dataAdmissao, dataDemissao } = dados;
 
   const tempoTrabalhado = calcTempoTrabalhado(dataAdmissao, dataDemissao);
   const { meses, dias } = tempoTrabalhado;

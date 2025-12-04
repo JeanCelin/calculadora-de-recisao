@@ -1,23 +1,22 @@
-import AvisoTrabalhado from "./trabalhado";
-import { AvisoIndenizado } from "./indenizado";
-import { AvisoNaoCumprido } from "./naoCumprido";
-import { AvisoDispensado } from "./dispensado";
+import { avisoTrabalhado } from "./trabalhado";
+import { avisoIndenizado } from "./indenizado";
+import { avisoNaoCumprido } from "./naoCumprido";
+import { avisoDispensado } from "./dispensado";
 import { Dados } from "@/app/types/dados";
 
-export function Aviso(dados: Dados) {
+export function calcAviso(dados: Dados) {
   const { aviso } = dados;
 
   switch (aviso) {
     case "TRABALHADO":
-      return AvisoTrabalhado();
+      return avisoTrabalhado();
     case "INDENIZADO":
-      return AvisoIndenizado(dados);
+      return avisoIndenizado(dados);
     case "NAOCUMPRIDO":
-      return AvisoNaoCumprido(dados);
+      return avisoNaoCumprido(dados);
     case "DISPENSADO":
-      return AvisoDispensado();
+      return avisoDispensado();
     default:
       throw new Error("Tipo de aviso não informado ou inválido");
   }
 }
-

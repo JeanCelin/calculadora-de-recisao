@@ -12,6 +12,6 @@ Pode haver redução de jornada:
 
 7 dias corridos a menos no fim. */
 
-export default function AvisoTrabalhado() {
+export  function avisoTrabalhado() {
   return Number(0);
 }

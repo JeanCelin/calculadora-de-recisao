@@ -1,43 +1,42 @@
-"use client";
-
-import { DecimoTerceiro } from "@/app/utils/decimo-terceiro/calc-decimo-terceiro";
-import { FeriasProporcionais } from "@/app/utils/ferias/calc-ferias-proporcinais";
-import { CalcferiasVencidas } from "@/app/utils/ferias/calc-ferias-vencidas";
-import { CalcUmTercoFerias } from "@/app/utils/ferias/calc-um-terco-ferias";
-import Fgts from "@/app/utils/fgts";
+import { decimoTerceiro } from "@/app/utils/decimo-terceiro/calc-decimo-terceiro";
+import { feriasProporcionais } from "@/app/utils/ferias/calc-ferias-proporcinais";
+import { calcferiasVencidas } from "@/app/utils/ferias/calc-ferias-vencidas";
+import { calcUmTercoFerias } from "@/app/utils/ferias/calc-um-terco-ferias";
+import { fgts } from "@/app/utils/fgts";
 import { saldoSalario } from "@/app/utils/saldo-salario/calc-saldo-salario";
 import { Resposta } from "@/app/types/resposta";
 
 import { calcularDescontoINSS } from "@/app/utils/inss/calc-desconto-inss";
 import { calcularDescontoIRRF } from "@/app/utils/irrf/calc-desconto-irrf";
 import { somar } from "@/app/utils/somar";
-import { Aviso } from "../regra-aviso";
+import { calcAviso } from "../regra-aviso";
 import { Dados } from "@/app/types/dados";
 
-export default function Pedido(dados: Dados) {
+export function pedido(dados: Dados) {
+  console.log(dados);
   const { salario, dataDemissao, faltas, feriasVencidasPeriodos, aviso } =
-    dados ;
+    dados;
   /* Quando o funcionário pede demissão, ele tem direito a receber:
     1) Saldo Salário;*/
   const saldoSalarioReceber = saldoSalario(salario, dataDemissao, faltas);
   /*
     2) Ferias Vencidas + 1/3; */
   const feriasVencidasReceber = feriasVencidasPeriodos
-    ? CalcferiasVencidas(salario, feriasVencidasPeriodos)
+    ? calcferiasVencidas(salario, feriasVencidasPeriodos)
     : 0;
-  const feriasVencidasUmTerco = CalcUmTercoFerias(feriasVencidasReceber);
+  const feriasVencidasUmTerco = calcUmTercoFerias(feriasVencidasReceber);
   /*
     3) Férias Proporcionais + 1/3; */
-  const feriasProporcionaisReceber = FeriasProporcionais();
-  const feriasPropsUmTerco = CalcUmTercoFerias(feriasProporcionaisReceber);
+  const feriasProporcionaisReceber = feriasProporcionais(dados);
+  const feriasPropsUmTerco = calcUmTercoFerias(feriasProporcionaisReceber);
   /*
     4) 13º Salário Proporcional; */
-  const decimoTerceiroSalario = DecimoTerceiro();
+  const decimoTerceiroSalario = decimoTerceiro(dados);
   /* 
     5) Saldo FGTS depositado (O funcionário não recebe multa e não saca FGTS, mas o saldo continua lá.)
     6) Depósito FGTS do mês da Recisão
     */
-  const valorAviso = Aviso(dados); //Aviso Previo
+  const valorAviso = calcAviso(dados); //Aviso Previo
   //FGTS
   const {
     fgtsDepositado,
@@ -45,7 +44,7 @@ export default function Pedido(dados: Dados) {
     fgtsDecimoTerceiro,
     fgtsMulta,
     fgtsTotalSaque,
-  } = Fgts(false, false);
+  } = fgts(false, false, dados);
 
   /*
     ------------------
