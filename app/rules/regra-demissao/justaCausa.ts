@@ -1,7 +1,4 @@
 "use client";
-
-import { useDados } from "@/app/components/data-provider";
-
 import { DecimoTerceiro } from "@/app/utils/decimo-terceiro/calc-decimo-terceiro";
 
 import { CalcferiasVencidas } from "@/app/utils/ferias/calc-ferias-vencidas";
@@ -14,10 +11,11 @@ import { calcularDescontoINSS } from "@/app/utils/inss/calc-desconto-inss";
 import { calcularDescontoIRRF } from "@/app/utils/irrf/calc-desconto-irrf";
 import { somar } from "@/app/utils/somar";
 import { Aviso } from "../regra-aviso";
+import { Dados } from "@/app/types/dados";
 
-export default function JustaCausa() {
+export default function JustaCausa(dados: Dados) {
   const { salario, dataDemissao, faltas, feriasVencidasPeriodos, aviso, demissao } =
-    useDados();
+    dados;
 
   const saldoSalarioReceber = saldoSalario(salario, dataDemissao, faltas);
   /*
@@ -38,7 +36,7 @@ export default function JustaCausa() {
     5) Saldo FGTS depositado (O funcionário não recebe multa e não saca FGTS, mas o saldo continua lá.)
     6) Depósito FGTS do mês da Recisão
     */
- const valorAviso = Aviso(); //Aviso Previo
+ const valorAviso = Aviso(dados); //Aviso Previo
   //FGTS
   const {
     fgtsDepositado,

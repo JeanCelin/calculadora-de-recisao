@@ -1,7 +1,8 @@
-import { useDados } from "@/app/components/data-provider";
+import { Dados } from "@/app/types/dados"
 
 
-export function AvisoNaoCumprido () {
-  const { salario} = useDados()
+
+export function AvisoNaoCumprido (dados: Dados) {
+  const { salario} = dados
   return Number(salario * -1)
 }

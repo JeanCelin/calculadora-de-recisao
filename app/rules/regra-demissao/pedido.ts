@@ -1,7 +1,5 @@
 "use client";
 
-import { useDados } from "@/app/components/data-provider";
-
 import { DecimoTerceiro } from "@/app/utils/decimo-terceiro/calc-decimo-terceiro";
 import { FeriasProporcionais } from "@/app/utils/ferias/calc-ferias-proporcinais";
 import { CalcferiasVencidas } from "@/app/utils/ferias/calc-ferias-vencidas";
@@ -14,31 +12,32 @@ import { calcularDescontoINSS } from "@/app/utils/inss/calc-desconto-inss";
 import { calcularDescontoIRRF } from "@/app/utils/irrf/calc-desconto-irrf";
 import { somar } from "@/app/utils/somar";
 import { Aviso } from "../regra-aviso";
+import { Dados } from "@/app/types/dados";
 
-export default function Pedido() {
+export default function Pedido(dados: Dados) {
   const { salario, dataDemissao, faltas, feriasVencidasPeriodos, aviso } =
-    useDados();
+    dados ;
   /* Quando o funcionário pede demissão, ele tem direito a receber:
     1) Saldo Salário;*/
   const saldoSalarioReceber = saldoSalario(salario, dataDemissao, faltas);
   /*
     2) Ferias Vencidas + 1/3; */
-    const feriasVencidasReceber = feriasVencidasPeriodos
+  const feriasVencidasReceber = feriasVencidasPeriodos
     ? CalcferiasVencidas(salario, feriasVencidasPeriodos)
     : 0;
-    const feriasVencidasUmTerco = CalcUmTercoFerias(feriasVencidasReceber)
-    /*
+  const feriasVencidasUmTerco = CalcUmTercoFerias(feriasVencidasReceber);
+  /*
     3) Férias Proporcionais + 1/3; */
-    const feriasProporcionaisReceber = FeriasProporcionais();
-    const feriasPropsUmTerco = CalcUmTercoFerias(feriasProporcionaisReceber);
-    /*
+  const feriasProporcionaisReceber = FeriasProporcionais();
+  const feriasPropsUmTerco = CalcUmTercoFerias(feriasProporcionaisReceber);
+  /*
     4) 13º Salário Proporcional; */
-    const decimoTerceiroSalario = DecimoTerceiro();
-    /* 
+  const decimoTerceiroSalario = DecimoTerceiro();
+  /* 
     5) Saldo FGTS depositado (O funcionário não recebe multa e não saca FGTS, mas o saldo continua lá.)
     6) Depósito FGTS do mês da Recisão
     */
- const valorAviso = Aviso(); //Aviso Previo
+  const valorAviso = Aviso(dados); //Aviso Previo
   //FGTS
   const {
     fgtsDepositado,
@@ -57,13 +56,13 @@ export default function Pedido() {
     4) Aviso Prévio Indenizado (se o funcionário não trabalhar, ele PAGA a empresa);
  */
 
-// Verbas Recisórias
-const totalVerbas = somar(
-  saldoSalarioReceber,
-  decimoTerceiroSalario,
-  feriasProporcionaisReceber,
-  feriasPropsUmTerco,
-  valorAviso
+  // Verbas Recisórias
+  const totalVerbas = somar(
+    saldoSalarioReceber,
+    decimoTerceiroSalario,
+    feriasProporcionaisReceber,
+    feriasPropsUmTerco,
+    valorAviso
   );
 
   //Deduções
@@ -73,15 +72,13 @@ const totalVerbas = somar(
     saldoSalarioReceber,
     decimoTerceiroSalario,
     inss,
-    inssDecimoTerceiro,
+    inssDecimoTerceiro
   );
   const totalDeducao =
     somar(valorAviso, inss, inssDecimoTerceiro, irrf) * Number(-1);
 
   //Total Geral
-  const totalLiquido = totalVerbas + fgtsTotalSaque + (totalDeducao  * Number(-1));
-
-
+  const totalLiquido = totalVerbas + fgtsTotalSaque + totalDeducao * Number(-1);
 
   const calculo: Resposta = {
     demissao: "pedido",

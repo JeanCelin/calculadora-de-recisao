@@ -1,19 +1,19 @@
-import { useDados } from "@/app/components/data-provider";
 import AvisoTrabalhado from "./trabalhado";
 import { AvisoIndenizado } from "./indenizado";
 import { AvisoNaoCumprido } from "./naoCumprido";
 import { AvisoDispensado } from "./dispensado";
+import { Dados } from "@/app/types/dados";
 
-export function Aviso() {
-  const { aviso } = useDados();
+export function Aviso(dados: Dados) {
+  const { aviso } = dados;
 
   switch (aviso) {
     case "TRABALHADO":
       return AvisoTrabalhado();
     case "INDENIZADO":
-      return AvisoIndenizado();
+      return AvisoIndenizado(dados);
     case "NAOCUMPRIDO":
-      return AvisoNaoCumprido();
+      return AvisoNaoCumprido(dados);
     case "DISPENSADO":
       return AvisoDispensado();
     default:

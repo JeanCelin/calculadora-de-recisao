@@ -1,43 +1,23 @@
-'use client'
+"use client";
 
-import { createContext, useContext } from "react";
-import { TiposAviso } from "../types/tiposAviso";
-import { TiposDemissao } from "../types/tiposDemissao";
+import { createContext, useState } from "react";
 
-type Dados = {
-  dataAdmissao: string;
-  dataDemissao: string;
-  salario: number;
-  faltas: number;
-  feriasVencidasPeriodos: number;
-  aviso: TiposAviso;
-  diasAviso: number;
-  demissao: TiposDemissao;
-};
+export const DadosContext = createContext(null);
 
+export function DadosProvider({ children }) {
+  const [dados, setDados] = useState(null);
+  const [resultado, setResultado] = useState(null);
 
-const dadosPadrao: Dados = {
-  dataAdmissao: "2024-01-01",
-  dataDemissao: "2025-11-13",
-  salario: 10000,
-  faltas: 0, // Faltas Injustificadas desconta do saldo do salario
-  feriasVencidasPeriodos: 0,
-  demissao: TiposDemissao.semJustaCausa,
-  aviso: TiposAviso.trabalhado,
-  diasAviso: 30,
-};
+  const value = {
+    dados,
+    setDados,
+    resultado,
+    setResultado,
+  };
 
-
-
-
-const DadosContext = createContext<Dados>(dadosPadrao);
-
-export const DadosProvider = ({ children}: {children: React.ReactNode})=>{
   return (
-    <DadosContext.Provider value={dadosPadrao}>
+    <DadosContext.Provider value={value}>
       {children}
     </DadosContext.Provider>
-  )
+  );
 }
-
-export const  useDados = () => useContext(DadosContext)

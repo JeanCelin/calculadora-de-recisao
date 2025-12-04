@@ -1,12 +1,9 @@
-'use client'
+"use client";
 
-
+import { Dados } from "../types/dados";
 import RegrasDemissao from "../rules/regra-demissao";
-import { useDados } from "../components/data-provider";
 
-export default function CalcRecisorio() {
-  const { demissao} = useDados()
-  RegrasDemissao(demissao);
+export default function CalcRecisorio(dados: Dados) {
 
-  
+  RegrasDemissao(dados);
 }
