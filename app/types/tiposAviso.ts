@@ -1,7 +1,7 @@
 export enum TiposAviso {
   trabalhado = "TRABALHADO",
   indenizado = "INDENIZADO",
-  naoCumprido = "NAOCUMPRIDO",
+  naoCumprido = "NÃO CUMPRIDO",
   dispensado = "DISPENSADO"
 
 }

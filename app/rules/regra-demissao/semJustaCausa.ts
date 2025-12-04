@@ -12,9 +12,15 @@ import { somar } from "@/app/utils/somar";
 import { calcAviso } from "../regra-aviso";
 import { Dados } from "@/app/types/dados";
 
-export  function semJustaCausa(dados: Dados) {
-  const { salario, dataDemissao, faltas, feriasVencidasPeriodos, aviso } =
-    dados;
+export function semJustaCausa(dados: Dados) {
+  const {
+    salario,
+    dataDemissao,
+    faltas,
+    feriasVencidasPeriodos,
+    aviso,
+    demissao,
+  } = dados;
 
   const saldoSalarioReceber = saldoSalario(salario, dataDemissao, faltas);
   /*
@@ -66,8 +72,10 @@ export  function semJustaCausa(dados: Dados) {
   const totalLiquido = totalVerbas + fgtsTotalSaque + totalDeducao * Number(-1);
 
   const calculo: Resposta = {
-    demissao: "pedido",
+    demissao: demissao,
     aviso: aviso,
+    dataAdmissao: dataDemissao,
+    dataDemissao: dataDemissao,
 
     verbas: {
       saldoSalario: saldoSalarioReceber,

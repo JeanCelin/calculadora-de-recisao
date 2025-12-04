@@ -1,7 +1,8 @@
 export type Resposta = {
   demissao: string;
   aviso: string;
-
+  dataAdmissao: string;
+  dataDemissao: string;
   verbas: {
     saldoSalario: number;
     feriasVencidas: number;

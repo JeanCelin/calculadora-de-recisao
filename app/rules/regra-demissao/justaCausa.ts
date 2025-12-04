@@ -71,6 +71,8 @@ export function justaCausa(dados: Dados) {
   const calculo: Resposta = {
     demissao: demissao,
     aviso: aviso,
+    dataAdmissao: dataDemissao,
+    dataDemissao: dataDemissao,
 
     verbas: {
       saldoSalario: saldoSalarioReceber,

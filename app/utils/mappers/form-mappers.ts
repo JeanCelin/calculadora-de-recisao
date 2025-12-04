@@ -31,12 +31,12 @@ export function mapToTiposDemissao(
   const s = toStringValue(val, "demissao");
   // ajuste os cases conforme seu enum TiposDemissao
   switch (s) {
-    case TiposDemissao.pedido:
+    case "PEDIDO":
       return TiposDemissao.pedido; // exemplo — adapte ao seu enum
-    case TiposDemissao.semJustaCausa:
-      return TiposDemissao.semJustaCausa;
-    case TiposDemissao.justaCausa:
+    case "JUSTA CAUSA":
       return TiposDemissao.justaCausa;
+    case "SEM JUSTA CAUSA":
+      return TiposDemissao.semJustaCausa;
     default:
       throw new Error(`Tipo de rescisão inválido: ${s}`);
   }

@@ -14,8 +14,15 @@ import { Dados } from "@/app/types/dados";
 
 export function pedido(dados: Dados) {
   console.log(dados);
-  const { salario, dataDemissao, faltas, feriasVencidasPeriodos, aviso } =
-    dados;
+  const {
+    salario,
+    dataAdmissao,
+    dataDemissao,
+    faltas,
+    feriasVencidasPeriodos,
+    aviso,
+    demissao,
+  } = dados;
   /* Quando o funcionário pede demissão, ele tem direito a receber:
     1) Saldo Salário;*/
   const saldoSalarioReceber = saldoSalario(salario, dataDemissao, faltas);
@@ -80,8 +87,10 @@ export function pedido(dados: Dados) {
   const totalLiquido = totalVerbas + fgtsTotalSaque + totalDeducao * Number(-1);
 
   const calculo: Resposta = {
-    demissao: "pedido",
+    demissao: demissao,
     aviso: aviso,
+    dataAdmissao: dataAdmissao,
+    dataDemissao: dataDemissao,
 
     verbas: {
       saldoSalario: saldoSalarioReceber,

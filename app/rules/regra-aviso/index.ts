@@ -12,7 +12,7 @@ export function calcAviso(dados: Dados) {
       return avisoTrabalhado();
     case "INDENIZADO":
       return avisoIndenizado(dados);
-    case "NAOCUMPRIDO":
+    case "NÃO CUMPRIDO":
       return avisoNaoCumprido(dados);
     case "DISPENSADO":
       return avisoDispensado();

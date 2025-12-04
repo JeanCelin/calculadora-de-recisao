@@ -1,5 +1,5 @@
 "use client";
-
+import Result from "./Result";
 import { useDadosStore } from "../store/dados";
 import { TiposAviso } from "../types/tiposAviso";
 import { TiposDemissao } from "../types/tiposDemissao";
@@ -9,10 +9,12 @@ import {
   mapToTiposDemissao,
 } from "../utils/mappers/form-mappers";
 
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
+import { Resposta } from "../types/resposta";
 
 export default function Form() {
   const setDados = useDadosStore((s) => s.setDados);
+  const [result, setResult] = useState<false | undefined | Resposta>();
 
   interface DadosForm {
     dataAdmissao: string;
@@ -71,9 +73,16 @@ export default function Form() {
 
       // persistir globalmente
       setDados(dados);
-
+     
       // calcular (pode ser sync ou async — aqui trato como sync)
-      calcRecisorio(dados);
+      const resultCalc = calcRecisorio(dados);
+
+      if (resultCalc !== undefined && resultCalc !== null) {
+        setResult(resultCalc);  
+  
+      } else {
+        setResult(false);
+      }
     } catch (err) {
       // lide com erros de validação de forma amigável
       console.error("Erro ao processar formulário:", err);
@@ -120,8 +129,7 @@ export default function Form() {
           id="tipoRecisao"
           className="h-10 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm shadow-sm outline-none focus:border-slate-300 focus:ring-1 focus:ring-blue-200">
           <option value={TiposDemissao.pedido}>{TiposDemissao.pedido}</option>
-          <option value={TiposDemissao.semJustaCausa}>
-            {TiposDemissao.semJustaCausa}
+          <option value={TiposDemissao.semJustaCausa}>            {TiposDemissao.semJustaCausa}
           </option>
           <option value={TiposDemissao.justaCausa}>
             {TiposDemissao.justaCausa}
@@ -155,6 +163,9 @@ export default function Form() {
       <button type="submit" className="btn btn-primary text-nowrap m-auto">
         Calcular
       </button>
+      <div>
+        <Result result={result}></Result>
+      </div>
     </form>
   );
 }
