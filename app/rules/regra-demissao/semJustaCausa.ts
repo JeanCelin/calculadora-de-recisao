@@ -50,9 +50,11 @@ export function semJustaCausa(dados: Dados) {
   // Verbas Recisórias
   const totalVerbas = somar(
     saldoSalarioReceber,
-    decimoTerceiroSalario,
+        feriasVencidasReceber,
+    feriasVencidasUmTerco,
     feriasProporcionaisReceber,
     feriasPropsUmTerco,
+    decimoTerceiroSalario,
     valorAviso
   );
 

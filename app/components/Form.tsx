@@ -14,7 +14,9 @@ import { Resposta } from "../types/resposta";
 
 export default function Form() {
   const setDados = useDadosStore((s) => s.setDados);
+  const [feriasVencidas, setFeriasVencidas] = useState(false);
   const [result, setResult] = useState<false | undefined | Resposta>();
+  const [periodos, setPeriodos] = useState(0);
 
   interface DadosForm {
     dataAdmissao: string;
@@ -24,7 +26,6 @@ export default function Form() {
     aviso: TiposAviso;
     diasAviso: number;
     demissao: TiposDemissao;
-    feriasVencidas: number;
     feriasVencidasPeriodos: number;
   }
 
@@ -58,6 +59,8 @@ export default function Form() {
       const aviso = mapToTiposAviso(form.get("tipoAviso"));
       const demissao = mapToTiposDemissao(form.get("tipoRecisao"));
 
+      const feriasVencidasPeriodos = periodos;
+
       const dados: DadosForm = {
         dataAdmissao,
         dataDemissao,
@@ -66,20 +69,17 @@ export default function Form() {
         aviso,
         diasAviso: 30,
         demissao,
-        feriasVencidas:
-          toStringValue(form.get("feriasVencidas")) === "Sim" ? 1 : 0,
-        feriasVencidasPeriodos: 0,
+        feriasVencidasPeriodos,
       };
 
       // persistir globalmente
       setDados(dados);
-     
+
       // calcular (pode ser sync ou async — aqui trato como sync)
       const resultCalc = calcRecisorio(dados);
 
       if (resultCalc !== undefined && resultCalc !== null) {
-        setResult(resultCalc);  
-  
+        setResult(resultCalc);
       } else {
         setResult(false);
       }
@@ -89,7 +89,14 @@ export default function Form() {
       // (opcional) exiba um toast / mensagem pro usuário
     }
   }
-
+  // Manipula as opções de ferias vencidas
+  const handleFeriasVencidasChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const valor = e.target.value === "Sim";
+    setFeriasVencidas(valor);
+    setPeriodos(valor ? 1 : 0); // 👈 período automático
+  };
   return (
     <form className="grid text gap-4 p-4" onSubmit={handleSubmit}>
       <div className="flex gap-1 flex-col">
@@ -129,7 +136,8 @@ export default function Form() {
           id="tipoRecisao"
           className="h-10 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm shadow-sm outline-none focus:border-slate-300 focus:ring-1 focus:ring-blue-200">
           <option value={TiposDemissao.pedido}>{TiposDemissao.pedido}</option>
-          <option value={TiposDemissao.semJustaCausa}>            {TiposDemissao.semJustaCausa}
+          <option value={TiposDemissao.semJustaCausa}>
+            {TiposDemissao.semJustaCausa}
           </option>
           <option value={TiposDemissao.justaCausa}>
             {TiposDemissao.justaCausa}
@@ -155,10 +163,25 @@ export default function Form() {
         <select
           name="feriasVencidas"
           id="feriasVencidas"
-          className="h-10 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm shadow-sm outline-none focus:border-slate-300 focus:ring-1 focus:ring-blue-200">
+          className="h-10 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm shadow-sm outline-none focus:border-slate-300 focus:ring-1 focus:ring-blue-200"
+          onChange={handleFeriasVencidasChange}>
           <option value="Não">Não</option>
           <option value="Sim">Sim</option>
         </select>
+        {feriasVencidas && (
+          <div className="flex gap-1 flex-col">
+            <label htmlFor="feriasVencidasPeriodos">Periodos</label>
+            <input
+              name="feriasVencidasPeriodos"
+              id="feriasVencidasPeriodos"
+              type="number"
+              className="input"
+              min={1}
+              placeholder="Quantidade de períodos vencidos"
+              onChange={(e) => setPeriodos(Number(e.target.value))}
+            />
+          </div>
+        )}
       </div>
       <button type="submit" className="btn btn-primary text-nowrap m-auto">
         Calcular

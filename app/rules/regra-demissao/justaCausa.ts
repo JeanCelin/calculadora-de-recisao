@@ -52,7 +52,13 @@ export function justaCausa(dados: Dados) {
   } = fgts(false, false, dados);
 
   // Verbas Recisórias
-  const totalVerbas = somar(saldoSalarioReceber, valorAviso);
+  const totalVerbas = somar(
+    saldoSalarioReceber,
+    valorAviso,
+    decimoTerceiroSalario,
+    feriasVencidasReceber,
+    feriasVencidasUmTerco
+  );
 
   //Deduções
   const inss = calcularDescontoINSS(saldoSalarioReceber);

@@ -68,6 +68,8 @@ export function pedido(dados: Dados) {
     decimoTerceiroSalario,
     feriasProporcionaisReceber,
     feriasPropsUmTerco,
+    feriasVencidasReceber,
+    feriasVencidasUmTerco,
     valorAviso
   );
 
