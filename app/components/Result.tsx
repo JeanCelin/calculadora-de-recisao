@@ -26,31 +26,13 @@ export default function Result({
   } = result;
   return (
     <div
-      className="p-4 border border-stone-50
-     rounded-md bg-blue-50 shadow grid grid-cols-1 gap-6">
+      className="pl-4 pr-4 pt-6 pb-6  border border-stone-50
+     rounded-md bg-blue-50 shadow grid grid-cols-1 gap-6 ">
       <div className="">
         <div>
           <h2 className="title">Resultado do Calculo</h2>
           <p className="bg-white rounded-md p-4 text-center text-base font-bold ">{`R$ ${Number(totalLiquido).toFixed(2)}`}</p>
         </div>
-        {/* <div className="grid grid-cols-1 gap-3">
-          <div className = "container">
-            <span className ="key text">Tipo de Demissão:</span>
-            <p className="value text2"> {demissao}</p>
-          </div>
-          <div className = "container">
-            <span className ="key text">Tipo de Aviso:</span>
-            <p className="value text2">{aviso}</p>
-          </div>
-          <div className = "container">
-            <span className ="key text">Data Admissão:</span>
-            <p className="value text2">{dataAdmissao}</p>
-          </div>
-          <div className = "container">
-            <span className = "key text">Tipo de Demissão:</span>
-            <p className="value text2">{dataDemissao} </p>
-          </div>
-        </div> */}
       </div>
       <div className="flex flex-col gap-4">
         <h2 className="title">Verbas</h2>

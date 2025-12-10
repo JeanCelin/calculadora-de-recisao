@@ -1,41 +1,52 @@
 @import "tailwindcss";
+@reference "tailwindcss/utilities";
 
 :root {
   --color1: #155dfc;
   --color2: #e5f0ff;
   --color3: #e4effe;
 }
+
 .title {
   @apply font-bold text-lg text-blue-600 text-center;
 }
+
 .text {
   @apply text-sm font-medium text-gray-600;
 }
+
 .text2 {
   @apply text-sm font-medium text-gray-900;
 }
+
 .btn {
-  @apply px-4 py-2 rounded-md font-medium  transition-colors text-sm max-w-fit flex gap-2;
+  @apply px-4 py-2 rounded-md font-medium transition-colors text-sm max-w-fit flex gap-2;
 }
+
 .btn-primary {
   @apply bg-blue-600 text-white;
 }
+
 .input {
-  @apply w-full rounded-md border border-slate-200 bg-white px-3 py-2 shadow-sm outline-none placeholder:text-slate-400 focus-visible:ring-2 focus-visible:ring-blue-300  focus-visible:ring-offset-white focus-visible:border-slate-300 focus-visible:outline-none h-10 text-sm;
+  @apply w-full rounded-md border border-slate-200 bg-white px-3 py-2 shadow-sm outline-none placeholder:text-slate-400 
+    focus-visible:ring-2 focus-visible:ring-blue-300 focus-visible:ring-offset-white 
+    focus-visible:border-slate-300 focus-visible:outline-none h-10 text-sm;
 }
 
 .container {
-  @apply border-b pb-2 w-full grid grid-cols-2
+  @apply border-b pb-2 w-full grid grid-cols-2;
 }
+
 .key {
-  @apply justify-self-start
+  @apply justify-self-start;
 }
+
 .value {
-  @apply justify-self-end
- 
+  @apply justify-self-end;
 }
+
 .total {
-    @apply text-sm font-bold text-gray-600;
+  @apply text-sm font-bold text-gray-600;
 }
 
 body {
