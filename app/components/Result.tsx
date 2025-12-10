@@ -25,88 +25,109 @@ export default function Result({
     verbas,
   } = result;
   return (
-    <div className="p-4 border rounded-md">
-      <div>
-        <h2>DADOS</h2>
-        <p>
-          <strong>Tipo de Demissão:</strong> {demissao}
-        </p>
-        <p>
-          <strong>Tipo de Aviso:</strong> {aviso}
-        </p>
-        <p>
-          <strong>Data Admissão:</strong> {dataAdmissao}
-        </p>
-        <p>
-          <strong>Tipo de Demissão:</strong> {dataDemissao}
-        </p>
+    <div
+      className="p-4 border border-stone-50
+     rounded-md bg-blue-50 shadow grid grid-cols-1 gap-6">
+      <div className="">
+        <div>
+          <h2 className="title">Resultado do Calculo</h2>
+          <p className="bg-white rounded-md p-4 text-center text-base font-bold ">{`R$ ${Number(totalLiquido).toFixed(2)}`}</p>
+        </div>
+        {/* <div className="grid grid-cols-1 gap-3">
+          <div className = "container">
+            <span className ="key text">Tipo de Demissão:</span>
+            <p className="value text2"> {demissao}</p>
+          </div>
+          <div className = "container">
+            <span className ="key text">Tipo de Aviso:</span>
+            <p className="value text2">{aviso}</p>
+          </div>
+          <div className = "container">
+            <span className ="key text">Data Admissão:</span>
+            <p className="value text2">{dataAdmissao}</p>
+          </div>
+          <div className = "container">
+            <span className = "key text">Tipo de Demissão:</span>
+            <p className="value text2">{dataDemissao} </p>
+          </div>
+        </div> */}
       </div>
-      <div>
-        <h2>VERBAS</h2>
-        <p>
-          <strong>Saldo Salário:</strong> {verbas.saldoSalario}
-        </p>
-        <p>
-          <strong>Férias Proporcionais:</strong> {verbas.feriasProps}
-        </p>
-        <p>
-          <strong>Férais 1/3:</strong> {verbas.feriasPropsUmTerco}
-        </p>
-        <p>
-          <strong>Férias Vencidas:</strong> {verbas.feriasVencidas}
-        </p>
-        <p>
-          <strong>Férias Vencidas 1/3:</strong> {verbas.feriasVencidasUmTerco}
-        </p>
-        <p>
-          <strong>Décimo Terceiro:</strong> {verbas.decimoTerceiroSalario}
-        </p>
-        <p>
-          <strong>Valor Aviso:</strong> {verbas.aviso}
-        </p>
-        <p>
-          <strong>Total Verbas:</strong> {verbas.totalVerbas}
-        </p>
+      <div className="flex flex-col gap-4">
+        <h2 className="title">Verbas</h2>
+        <div className="container ">
+          <span className="key text">Saldo Salário:</span>
+          <p className="value text2">{verbas.saldoSalario}</p>
+        </div>
+        <div className="container">
+          <span className="key text">Férias Proporcionais:</span>
+          <p className="value text2">{verbas.feriasProps}</p>
+        </div>
+        <div className="container">
+          <span className="key text">Férais 1/3:</span>
+          <p className="value text2">{verbas.feriasPropsUmTerco}</p>
+        </div>
+        <div className="container">
+          <span className="key text">Férias Vencidas:</span>
+          <p className="value text2">{verbas.feriasVencidas}</p>
+        </div>
+        <div className="container">
+          <span className="key text">Férias Vencidas 1/3:</span>
+          <p className="value text2">{verbas.feriasVencidasUmTerco}</p>
+        </div>
+        <div className="container">
+          <span className="key text">Décimo Terceiro:</span>
+          <p className="value text2">{verbas.decimoTerceiroSalario}</p>
+        </div>
+        <div className="container">
+          <span className="key text">Valor Aviso:</span>
+          <p className="value text2">{verbas.aviso}</p>
+        </div>
+        <div className="container total ">
+          <span className="key ">Total Verbas:</span>
+          <p className="value">{verbas.totalVerbas}</p>
+        </div>
       </div>
-      <div>
-        <h2>FGTS:</h2>
-        <p>
-          <strong>FGTS Saldo Salário: </strong>
-          {fgts.fgtsSaldoSalario}
-        </p>
-        <p>
-          <strong>FGTS Depositado: </strong>
-          {fgts.fgtsDepositado}
-        </p>
-        <p>
-          <strong>FGTS Multa:</strong>
-          {fgts.fgtsMulta}
-        </p>
-        <p>
-          <strong>FGTS Saque Disponível: </strong>
-          {fgts.fgtsTotalSaque}
-        </p>
+      <div className="flex flex-col gap-4">
+        <h2 className="title">FGTS Estimado</h2>
+        <div className="container">
+          <span className="key text">FGTS Depositado: </span>
+          <p className="value text2">{fgts.fgtsDepositado}</p>
+        </div>
+        <div className="container">
+          <span className="key text">FGTS Saldo Salário: </span>
+          <p className="value text2">{fgts.fgtsSaldoSalario}</p>
+        </div>
+        <div className="container">
+          <span className="key text">FGTS Multa:</span>
+          <p className="value text2">{fgts.fgtsMulta}</p>
+        </div>
+        <div className="container total">
+          <span className="key ">FGTS Saque Disponível: </span>
+          <p className="value">{fgts.fgtsTotalSaque}</p>
+        </div>
       </div>
-      <div>
-        <h2>DEDUÇÕES</h2>
-        <p>
-          <strong>INSS:</strong> {deducao.inss}
-        </p>
-        <p>
-          <strong>INSS Décimo Terceiro:</strong> {deducao.inssDecimoTerceiro}
-        </p>
-        <p>
-          <strong>IRRF:</strong> {deducao.irrf}
-        </p>
-        <p>
-          <strong>Aviso a Deduzir:</strong> {deducao.valorAviso}
-        </p>
-        <p>
-          <strong>Total a Deduzir:</strong> {deducao.totalDeducao}
-        </p>
-      </div>
-      <div>
-        <strong>Total Líquido:</strong> {totalLiquido}
+      <div className="flex flex-col gap-4">
+        <h2 className="title">DEDUÇÕES</h2>
+        <div className="container">
+          <span className="key text">INSS</span>
+          <p className="value text2">{deducao.inss}</p>
+        </div>
+        <div className="container">
+          <span className="key text">INSS Décimo Terceiro:</span>
+          <p className="value text2">{deducao.inssDecimoTerceiro}</p>
+        </div>
+        <div className="container">
+          <span className="key text">IRRF:</span>
+          <p className="value text2">{deducao.irrf}</p>
+        </div>
+        <div className="container">
+          <span className="key text">Aviso a Deduzir:</span>
+          <p className="value text2">{deducao.valorAviso}</p>
+        </div>
+        <div className="container total">
+          <span className="key ">Total a Deduzir:</span>
+          <p className="value">{deducao.totalDeducao}</p>
+        </div>
       </div>
     </div>
   );
