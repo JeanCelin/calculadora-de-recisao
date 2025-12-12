@@ -20,6 +20,8 @@ export function mapToTiposAviso(val: FormDataEntryValue | null): TiposAviso {
       return TiposAviso.dispensado;
     case TiposAviso.naoCumprido:
       return TiposAviso.naoCumprido;
+    case TiposAviso.nao:
+      return TiposAviso.nao;
     default:
       throw new Error(`Tipo de aviso inválido: ${s}`);
   }

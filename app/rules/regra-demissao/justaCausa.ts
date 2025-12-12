@@ -48,7 +48,8 @@ export function justaCausa(dados: Dados) {
     fgtsSaldoSalario,
     fgtsDecimoTerceiro,
     fgtsMulta,
-    fgtsTotalSaque,
+    fgtsTotal,
+    fgtsSaqueDisponivel,
   } = fgts(false, false, dados);
 
   // Verbas Recisórias
@@ -72,7 +73,7 @@ export function justaCausa(dados: Dados) {
   const totalDeducao = somar(valorAviso, inss, inssDecimoTerceiro, irrf);
 
   //Total Geral
-  const totalLiquido = totalVerbas + fgtsTotalSaque + totalDeducao * Number(-1);
+  const totalLiquido = totalVerbas + fgtsSaqueDisponivel + totalDeducao * Number(-1);
 
   const calculo: Resposta = {
     demissao: demissao,
@@ -95,7 +96,8 @@ export function justaCausa(dados: Dados) {
       fgtsSaldoSalario: fgtsSaldoSalario,
       fgtsDecimoTerceiro: fgtsDecimoTerceiro,
       fgtsMulta: fgtsMulta,
-      fgtsTotalSaque: fgtsTotalSaque,
+      fgtsTotal,
+      fgtsSaqueDisponivel: fgtsSaqueDisponivel,
     },
     deducao: {
       valorAviso: valorAviso,

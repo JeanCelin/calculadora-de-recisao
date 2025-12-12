@@ -50,7 +50,8 @@ export function pedido(dados: Dados) {
     fgtsSaldoSalario,
     fgtsDecimoTerceiro,
     fgtsMulta,
-    fgtsTotalSaque,
+    fgtsSaqueDisponivel,
+    fgtsTotal
   } = fgts(false, false, dados);
 
   /*
@@ -83,10 +84,10 @@ export function pedido(dados: Dados) {
     inssDecimoTerceiro
   );
   const totalDeducao =
-    somar(valorAviso, inss, inssDecimoTerceiro, irrf) * Number(-1);
+    somar(valorAviso, inss, inssDecimoTerceiro, irrf);
 
   //Total Geral
-  const totalLiquido = totalVerbas + fgtsTotalSaque + totalDeducao * Number(-1);
+  const totalLiquido = totalVerbas + fgtsSaqueDisponivel + totalDeducao * Number(-1);
 
   const calculo: Resposta = {
     demissao: demissao,
@@ -109,7 +110,8 @@ export function pedido(dados: Dados) {
       fgtsSaldoSalario: fgtsSaldoSalario,
       fgtsDecimoTerceiro: fgtsDecimoTerceiro,
       fgtsMulta: fgtsMulta,
-      fgtsTotalSaque: fgtsTotalSaque,
+      fgtsTotal: fgtsTotal,
+      fgtsSaqueDisponivel: fgtsSaqueDisponivel,
     },
     deducao: {
       valorAviso: valorAviso,

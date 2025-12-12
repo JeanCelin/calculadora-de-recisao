@@ -16,6 +16,6 @@ export function regrasDemissao(dados: Dados) {
   if (dados.demissao === "SEM JUSTA CAUSA") {
     calculo = semJustaCausa(dados);
     return calculo;
-  }
+  } 
   return calculo;
 }

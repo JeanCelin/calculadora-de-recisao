@@ -16,6 +16,8 @@ export function calcAviso(dados: Dados) {
       return avisoNaoCumprido(dados);
     case "DISPENSADO":
       return avisoDispensado();
+    case "NÃO":
+      return Number(0);
     default:
       throw new Error("Tipo de aviso não informado ou inválido");
   }

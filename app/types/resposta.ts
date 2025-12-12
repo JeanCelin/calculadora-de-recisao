@@ -18,7 +18,8 @@ export type Resposta = {
     fgtsSaldoSalario: number | boolean;
     fgtsDecimoTerceiro: number | boolean;
     fgtsMulta: number | boolean;
-    fgtsTotalSaque: number | boolean;
+    fgtsTotal: number;
+    fgtsSaqueDisponivel: number | boolean;
   };
   deducao: {
     valorAviso: number | boolean;

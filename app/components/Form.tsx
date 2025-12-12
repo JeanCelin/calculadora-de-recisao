@@ -17,7 +17,7 @@ export default function Form() {
   const [feriasVencidas, setFeriasVencidas] = useState(false);
   const [result, setResult] = useState<false | undefined | Resposta>();
   const [periodos, setPeriodos] = useState(0);
-
+  const [tipoRecisao, setTipoRecisao] = useState("PEDIDO");
   interface DadosForm {
     dataAdmissao: string;
     dataDemissao: string;
@@ -93,10 +93,17 @@ export default function Form() {
   const handleFeriasVencidasChange = (
     e: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    const valor = e.target.value === "Sim";
-    setFeriasVencidas(valor);
-    setPeriodos(valor ? 1 : 0); // 👈 período automático
+    const valor = Number(e.target.value);
+    const isFeriasVencidas = valor >= 1 ? true : false;
+    setFeriasVencidas(isFeriasVencidas);
+    setPeriodos(valor);
   };
+
+  const handleTipoRecisaoChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const valor = e.target.value;
+    setTipoRecisao(valor);
+  };
+
   return (
     <form className="grid text gap-4 p-4" onSubmit={handleSubmit}>
       <div className="flex gap-1 flex-col">
@@ -134,7 +141,8 @@ export default function Form() {
         <select
           name="tipoRecisao"
           id="tipoRecisao"
-          className="h-10 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm shadow-sm outline-none focus:border-slate-300 focus:ring-1 focus:ring-blue-200">
+          className="h-10 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm shadow-sm outline-none focus:border-slate-300 focus:ring-1 focus:ring-blue-200"
+          onChange={handleTipoRecisaoChange}>
           <option value={TiposDemissao.pedido}>{TiposDemissao.pedido}</option>
           <option value={TiposDemissao.semJustaCausa}>
             {TiposDemissao.semJustaCausa}
@@ -145,19 +153,60 @@ export default function Form() {
         </select>
       </div>
       <div className="flex gap-1 flex-col">
-        <label htmlFor="tipoAviso">Aviso Prévio</label>
-        <select
-          name="tipoAviso"
-          id="tipoAviso"
-          className="h-10 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm shadow-sm outline-none focus:border-slate-300 focus:ring-1 focus:ring-blue-200">
-          <option value={TiposAviso.trabalhado}>{TiposAviso.trabalhado}</option>
-          <option value={TiposAviso.indenizado}>{TiposAviso.indenizado}</option>
-          <option value={TiposAviso.dispensado}>{TiposAviso.dispensado}</option>
-          <option value={TiposAviso.naoCumprido}>
-            {TiposAviso.naoCumprido}
-          </option>
-        </select>
+        {tipoRecisao === "JUSTA CAUSA" ? (
+          <>
+            <label htmlFor="tipoAviso">Aviso Prévio</label>
+            <select
+              name="tipoAviso"
+              id="tipoAviso"
+              className="h-10 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm shadow-sm outline-none focus:border-slate-300 focus:ring-1 focus:ring-blue-200">
+              <option value={TiposAviso.nao}>{TiposAviso.nao}</option>
+            </select>
+          </>
+        ) : (
+          <>
+            <label htmlFor="tipoAviso">Aviso Prévio</label>
+            <select
+              name="tipoAviso"
+              id="tipoAviso"
+              className="h-10 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm shadow-sm outline-none focus:border-slate-300 focus:ring-1 focus:ring-blue-200">
+              {tipoRecisao === "PEDIDO" && (
+                <>
+                  <option value={TiposAviso.trabalhado}>
+                    {TiposAviso.trabalhado}
+                  </option>
+                  <option value={TiposAviso.indenizado}>
+                    {TiposAviso.indenizado}
+                  </option>
+                  <option value={TiposAviso.dispensado}>
+                    {TiposAviso.dispensado}
+                  </option>
+                  <option value={TiposAviso.naoCumprido}>
+                    {TiposAviso.naoCumprido}
+                  </option>
+                </>
+              )}
+              {tipoRecisao === "SEM JUSTA CAUSA" && (
+                <>
+                  <option value={TiposAviso.trabalhado}>
+                    {TiposAviso.trabalhado}
+                  </option>
+                  <option value={TiposAviso.indenizado}>
+                    {TiposAviso.indenizado}
+                  </option>
+                  <option value={TiposAviso.dispensado}>
+                    {TiposAviso.dispensado}
+                  </option>
+                  <option value={TiposAviso.naoCumprido}>
+                    {TiposAviso.naoCumprido}
+                  </option>
+                </>
+              )}
+            </select>
+          </>
+        )}
       </div>
+
       <div className="flex gap-1 flex-col">
         <label htmlFor="feriasVencidas">Férias vencidas a pagar?</label>
         <select
@@ -165,8 +214,8 @@ export default function Form() {
           id="feriasVencidas"
           className="h-10 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm shadow-sm outline-none focus:border-slate-300 focus:ring-1 focus:ring-blue-200"
           onChange={handleFeriasVencidasChange}>
-          <option value="Não">Não</option>
-          <option value="Sim">Sim</option>
+          <option value="0">Não</option>
+          <option value="1">Sim</option>
         </select>
         {feriasVencidas && (
           <div className="flex gap-1 flex-col">
@@ -177,7 +226,9 @@ export default function Form() {
               type="number"
               className="input"
               min={1}
-              placeholder="Quantidade de períodos vencidos"
+              placeholder="Qnt. Periodos Vencidos: (Minimo 1)
+              "
+              value={periodos}
               onChange={(e) => setPeriodos(Number(e.target.value))}
             />
           </div>

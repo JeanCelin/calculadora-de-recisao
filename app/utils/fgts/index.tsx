@@ -21,7 +21,7 @@ export function fgts(saque: boolean, multa: boolean, dados: Dados) {
   const fgtsDecimoTerceiro = calcFgtsDecimoTerceiro(taxaFGTS, dados);
 
   let fgtsMulta;
-  let fgtsTotalSaque;
+  let fgtsSaqueDisponivel;
 
   if (multa) {
     fgtsMulta = calcFgtsMulta(
@@ -33,21 +33,23 @@ export function fgts(saque: boolean, multa: boolean, dados: Dados) {
     fgtsMulta = Number(0);
   }
   if (saque) {
-    fgtsTotalSaque = somar(
+    fgtsSaqueDisponivel = somar(
       fgtsDepositado,
       fgtsSaldoSalario,
       fgtsDecimoTerceiro,
       fgtsMulta
     );
   } else {
-    fgtsTotalSaque = Number(0);
+    fgtsSaqueDisponivel = Number(0);
   }
+  const fgtsTotal = somar(fgtsDepositado, fgtsDecimoTerceiro, fgtsSaldoSalario, fgtsMulta)
 
   return {
     fgtsDepositado,
     fgtsSaldoSalario,
     fgtsDecimoTerceiro,
     fgtsMulta,
-    fgtsTotalSaque,
+    fgtsSaqueDisponivel,
+    fgtsTotal
   };
 }
