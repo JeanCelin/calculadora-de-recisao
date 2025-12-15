@@ -79,7 +79,6 @@ export default function Form() {
 
       // persistir globalmente
       setDados(dados);
-      console.log(dados);
       // calcular (pode ser sync ou async — aqui trato como sync)
 
       if (dados) {
@@ -285,6 +284,12 @@ export default function Form() {
           Calcular
         </button>
       </form>
+      <p className="bg-amber-100 border-2 border-[#F0A811] p-2 rounded-lg text">
+        A calculadora rescisória está em desenvolvimento contínuo e tem caráter
+        meramente estimativo. Considerando que o processo rescisório possui
+        diversas particularidades e pode variar conforme o caso, recomenda-se a
+        consulta a um profissional especializado.
+      </p>
       <div>{result && <Result result={result}></Result>}</div>
     </>
   );

@@ -2,17 +2,18 @@ import CalcIcon from "../svgs/CalcIcon";
 import ClockIcon from "../svgs/ClockIcon";
 import ShieldIcon from "../svgs/ShieldIcon";
 import Card from "./Card";
+import Recipe from "./Recipe";
 
 export default function About() {
   return (
-    <section className=" bg-blue-100 flex flex-col content-center items-center  text-center px-4 py-20   text  ">
-      <header className="max-w-4xl flex flex-col gap-4 content-center items-center mb-11">
+    <section className=" bg-blue-100 flex flex-col content-center items-center px-4 py-20   text  ">
+      {/* <header className="max-w-4xl flex flex-col gap-4 content-center items-center mb-11">
         <p className="title">
           Calcule o valor da sua recisão trabalhista em minutos
         </p>
         <p>
           Simples, rápido e gratuito. Descubra quanto você tem direito a receber
-          ao encerrar seu contrato de trabalho.{" "}
+          ao encerrar seu contrato de trabalho.
         </p>
         <button className="btn btn-primary flex items-center ">
           <div className="w-4">
@@ -20,8 +21,49 @@ export default function About() {
           </div>
           <p>Ir para a Calculadora</p>
         </button>
-      </header>
-      <div className="grid gap-6 pt-8 pb-8">
+      </header> */}
+      <section>
+        <h2 className="title">Fórmulas</h2>
+        <ol className="flex flex-col gap-2">
+          <li>
+            <Recipe
+              title="Saldo de salário"
+              recipe="Saldo = Salário/30 x Dias Trabalhados"
+            />
+          </li>
+          <li>
+            <Recipe
+              title="Férias vencidas"
+              recipe="Férias Vencidas = Salário x Periodos"
+              explain={["1 periodos = 30 dias"]}
+            />
+          </li>
+          <li>
+            <Recipe
+              title="Férias Proporcionais"
+              recipe=" Férias Proporcionais = (salario / 12) * meses trabalhados no ano"
+              explain={[
+                "1 mes = 30 dias.",
+                "Se 'sobrar' 15 dias ou mais trabalhados, é arrendondo para +1 mes, se não o mes não conta.",
+                "Exemplo: Tempo trabalhado no ano: 7 meses e 17 dias. Meses trabalhados = 8 meses",
+              ]}
+            />
+          </li>
+          <li>
+            <Recipe
+              title="Décimo terceiro"
+              recipe="Décimo terceiro = (salario / 12) * meses trabalhados no ano"
+              explain={[
+                "1 mes = 30 dias;",
+                "Exemplo: Tempo trabalhado no ano: 7 meses e 17 dias.",
+                "Meses trabalhados = 8 meses;",
+                "Se 'sobrar'; 15 dias ou mais trabalhados, é arrendondo para +1 mes, se não o mes não conta.  Exemplo: Tempo trabalhado no ano: 9 meses e 13 dias. Meses trabalhados = 9 meses",
+              ]}
+            />
+          </li>
+        </ol>
+      </section>
+      {/* <div className="grid gap-6 pt-8 pb-8">
         <Card
           svg={<CalcIcon size={24}/>}
           title="Cálculo Preciso"
@@ -38,7 +80,7 @@ export default function About() {
           title="100% Gratuito"
           text="Sem custos, sem cadastro, sem compromisso"
         />
-      </div>
+      </div> */}
     </section>
   );
 }
