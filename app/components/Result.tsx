@@ -1,6 +1,5 @@
 import { Resposta } from "../types/resposta";
-import { verifyText } from "../utils/verifyText";
-import { formatKey } from "../utils/format-key";
+
 import Section from "./Section";
 export default function Result({
   result,

@@ -1,14 +1,15 @@
 import { calcularAliquotaIRRF } from "./calc-aliquota-irrf";
 
 export function calcularDescontoIRRF(
-  salario: number,
-  decimoTerceiro: number,
+  verbasTributaveisIRRF: number,
+  // decimoTerceiro: number,
+  // inssDecimoTerceiro: number,
   inss: number,
-  inssDecimoTerceiro: number,
+  quantidadeDependentes: number
 ): number {
-  const totalINSS = inss + inssDecimoTerceiro;
 
-  const baseIRRF = salario + decimoTerceiro - totalINSS;
+  const descontoDependentes = quantidadeDependentes * 189.59;
+  const baseIRRF = verbasTributaveisIRRF - inss - descontoDependentes;
   const irrf = calcularAliquotaIRRF(baseIRRF);
 
   return Number((baseIRRF * irrf.aliquota - irrf.deduzir).toFixed(2));

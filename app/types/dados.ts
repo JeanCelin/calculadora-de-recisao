@@ -10,4 +10,5 @@ export type Dados = {
   aviso: TiposAviso;
   diasAviso: number;
   demissao: TiposDemissao;
+  quantidadeDependentes: number
 };

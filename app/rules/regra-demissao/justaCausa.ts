@@ -18,6 +18,7 @@ export function justaCausa(dados: Dados) {
     dataDemissao,
     faltas,
     feriasVencidasPeriodos,
+    quantidadeDependentes,
     aviso,
     demissao,
   } = dados;
@@ -62,18 +63,35 @@ export function justaCausa(dados: Dados) {
   );
 
   //Deduções
-  const inss = calcularDescontoINSS(saldoSalarioReceber);
-  const inssDecimoTerceiro = calcularDescontoINSS(decimoTerceiroSalario);
-  const irrf = calcularDescontoIRRF(
+  // base IRRF
+  const verbasTributaveisINSS = somar(
     saldoSalarioReceber,
-    decimoTerceiroSalario,
+    feriasVencidasReceber,
+    feriasVencidasUmTerco
+  );
+  //Não recebe ferias proporcinais em Justa causa
+
+  const inss = calcularDescontoINSS(verbasTributaveisINSS);
+  const inssDecimoTerceiro = calcularDescontoINSS(decimoTerceiroSalario);
+
+  // Base IRRF
+  const verbasTributaveisIRRF = somar(
+    saldoSalarioReceber,
+    feriasVencidasReceber,
+    feriasVencidasUmTerco
+  );
+  //Não recebe ferias proporcinais em Justa causa
+
+  const irrf = calcularDescontoIRRF(
+    verbasTributaveisIRRF,
     inss,
-    inssDecimoTerceiro
+    quantidadeDependentes
   );
   const totalDeducao = somar(valorAviso, inss, inssDecimoTerceiro, irrf);
 
   //Total Geral
-  const totalLiquido = totalVerbas + fgtsSaqueDisponivel + totalDeducao * Number(-1);
+  const totalLiquido =
+    totalVerbas + fgtsSaqueDisponivel + totalDeducao * Number(-1);
 
   const calculo: Resposta = {
     demissao: demissao,

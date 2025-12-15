@@ -5,7 +5,6 @@ import { calcTempoTrabalhado } from "@/app/utils/tempo-trabalhado/calc-tempo-tra
 export function avisoIndenizado(dados: Dados): number {
   const { salario, dataAdmissao, dataDemissao } = dados;
   const {dias, meses, anos} = calcTempoTrabalhado(dataAdmissao, dataDemissao);
-  console.log(anos)
   
   // Regra: 30 dias de aviso + 3 dias por ano trabalhado, até no máximo 90
   const diasAviso = Math.min(30 + 3 * Math.max(0, anos), 90);

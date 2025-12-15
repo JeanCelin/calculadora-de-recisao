@@ -13,13 +13,13 @@ import { calcAviso } from "../regra-aviso";
 import { Dados } from "@/app/types/dados";
 
 export function pedido(dados: Dados) {
-  console.log(dados);
   const {
     salario,
     dataAdmissao,
     dataDemissao,
     faltas,
     feriasVencidasPeriodos,
+    quantidadeDependentes,
     aviso,
     demissao,
   } = dados;
@@ -51,7 +51,7 @@ export function pedido(dados: Dados) {
     fgtsDecimoTerceiro,
     fgtsMulta,
     fgtsSaqueDisponivel,
-    fgtsTotal
+    fgtsTotal,
   } = fgts(false, false, dados);
 
   /*
@@ -75,19 +75,37 @@ export function pedido(dados: Dados) {
   );
 
   //Deduções
-  const inss = calcularDescontoINSS(saldoSalarioReceber);
-  const inssDecimoTerceiro = calcularDescontoINSS(decimoTerceiroSalario);
-  const irrf = calcularDescontoIRRF(
+  // base IRRF
+  const verbasTributaveisINSS = somar(
     saldoSalarioReceber,
-    decimoTerceiroSalario,
-    inss,
-    inssDecimoTerceiro
+    feriasVencidasReceber,
+    feriasVencidasUmTerco,
+    feriasProporcionaisReceber,
+    feriasPropsUmTerco
   );
-  const totalDeducao =
-    somar(valorAviso, inss, inssDecimoTerceiro, irrf);
+
+  const inss = calcularDescontoINSS(verbasTributaveisINSS);
+  const inssDecimoTerceiro = calcularDescontoINSS(decimoTerceiroSalario);
+
+  // Base IRRF
+  const verbasTributaveisIRRF = somar(
+    saldoSalarioReceber,
+    feriasVencidasReceber,
+    feriasVencidasUmTerco,
+    feriasProporcionaisReceber,
+    feriasPropsUmTerco
+  );
+
+  const irrf = calcularDescontoIRRF(
+    verbasTributaveisIRRF,
+    inss,
+    quantidadeDependentes
+  );
+  const totalDeducao = somar(valorAviso, inss, inssDecimoTerceiro, irrf);
 
   //Total Geral
-  const totalLiquido = totalVerbas + fgtsSaqueDisponivel + totalDeducao * Number(-1);
+  const totalLiquido =
+    totalVerbas + fgtsSaqueDisponivel + totalDeducao * Number(-1);
 
   const calculo: Resposta = {
     demissao: demissao,

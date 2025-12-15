@@ -18,6 +18,8 @@ export default function Form() {
   const [result, setResult] = useState<false | undefined | Resposta>();
   const [periodos, setPeriodos] = useState(0);
   const [tipoRecisao, setTipoRecisao] = useState("PEDIDO");
+  const [dependentes, setDependentes] = useState(false);
+  const [qntDependentes, setQntDependentes] = useState(0);
   interface DadosForm {
     dataAdmissao: string;
     dataDemissao: string;
@@ -27,6 +29,7 @@ export default function Form() {
     diasAviso: number;
     demissao: TiposDemissao;
     feriasVencidasPeriodos: number;
+    quantidadeDependentes: number;
   }
 
   function toStringValue(
@@ -60,6 +63,7 @@ export default function Form() {
       const demissao = mapToTiposDemissao(form.get("tipoRecisao"));
 
       const feriasVencidasPeriodos = periodos;
+      const quantidadeDependentes = qntDependentes;
 
       const dados: DadosForm = {
         dataAdmissao,
@@ -70,8 +74,9 @@ export default function Form() {
         diasAviso: 30,
         demissao,
         feriasVencidasPeriodos,
+        quantidadeDependentes,
       };
-
+      console.log(dados)
       // persistir globalmente
       setDados(dados);
 
@@ -104,6 +109,11 @@ export default function Form() {
     setTipoRecisao(valor);
   };
 
+  const handleDependentesChange = (e: string) => {
+    const teste = Number(e) === 0 ? false : true;
+    if (!teste) setQntDependentes(0)
+    setDependentes(teste);
+  };
   return (
     <form className="grid text gap-4 p-4" onSubmit={handleSubmit}>
       <div className="flex gap-1 flex-col">
@@ -230,6 +240,41 @@ export default function Form() {
               "
               value={periodos}
               onChange={(e) => setPeriodos(Number(e.target.value))}
+            />
+          </div>
+        )}
+      </div>
+
+      {/* --------------------------------------------------------- */}
+      <div className="flex gap-1 flex-col">
+        <label htmlFor="dependentes">Dependentes?</label>
+        <select
+          name="dependentes"
+          id="dependentes"
+          className="h-10 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm shadow-sm outline-none focus:border-slate-300 focus:ring-1 focus:ring-blue-200"
+          onChange={(e) => {
+            handleDependentesChange(e.target.value);
+          }}>
+          <option value={0}>Não</option>
+          <option value={1}>Sim</option>
+        </select>
+        {dependentes && (
+          <div className="flex gap-1 flex-col">
+            <label htmlFor="qntDependentes">Quantidade de Dependentes</label>
+            <input
+              name="qntDependentes"
+              id="qntDependentes"
+              type="number"
+              className="input"
+              min={1}
+              max={30}
+              required
+              placeholder="Numero de Dependentes
+              "
+              value={qntDependentes}
+              onChange={(e) => {
+                setQntDependentes(Number(e.target.value));
+              }}
             />
           </div>
         )}
