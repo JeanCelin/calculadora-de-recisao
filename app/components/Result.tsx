@@ -6,16 +6,11 @@ export default function Result({
 }: {
   result: Resposta | false | undefined;
 }) {
-  console.log(result);
   if (!result) {
-    return (
-      <p className="text-slate-500">
-        Preencha o formulário e clique em calcular.
-      </p>
-    );
+    return <p>Complete o Formulário</p>;
   }
-  const { deducao, fgts, totalLiquido, verbas } = result;
 
+  const { deducao, fgts, totalLiquido, verbas } = result;
   return (
     <div
       className="pl-4 pr-4 pt-6 pb-6  border border-stone-50

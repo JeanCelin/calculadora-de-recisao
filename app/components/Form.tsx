@@ -76,17 +76,18 @@ export default function Form() {
         feriasVencidasPeriodos,
         quantidadeDependentes,
       };
-      console.log(dados)
+
       // persistir globalmente
       setDados(dados);
-
+      console.log(dados);
       // calcular (pode ser sync ou async — aqui trato como sync)
-      const resultCalc = calcRecisorio(dados);
 
-      if (resultCalc !== undefined && resultCalc !== null) {
+      if (dados) {
+        const resultCalc = calcRecisorio(dados);
         setResult(resultCalc);
+        console.log(resultCalc);
       } else {
-        setResult(false);
+        console.log("sem dados");
       }
     } catch (err) {
       // lide com erros de validação de forma amigável
@@ -111,180 +112,180 @@ export default function Form() {
 
   const handleDependentesChange = (e: string) => {
     const teste = Number(e) === 0 ? false : true;
-    if (!teste) setQntDependentes(0)
+    if (!teste) setQntDependentes(0);
     setDependentes(teste);
   };
   return (
-    <form className="grid text gap-4 p-4" onSubmit={handleSubmit}>
-      <div className="flex gap-1 flex-col">
-        <label htmlFor="dataAdmissao">Data de Admissão </label>
-        <input
-          name="dataAdmissao"
-          id="dataAdmissao"
-          className="input"
-          type="date"
-          required
-        />
-      </div>
-      <div className="flex gap-1 flex-col">
-        <label htmlFor="dataDemissao">Data da Rescisão </label>
-        <input
-          name="dataDemissao"
-          id="dataDemissao"
-          className="input"
-          type="date"
-          required
-        />
-      </div>
-      <div className="flex gap-1 flex-col">
-        <label htmlFor="salAtual">Salário Atual (R$) </label>
-        <input
-          name="salAtual"
-          id="salAtual"
-          className="input"
-          type="number"
-          required
-        />
-      </div>
-      <div className="flex gap-1 flex-col">
-        <label htmlFor="tipoRecisao">Tipo de Rescisão </label>
-        <select
-          name="tipoRecisao"
-          id="tipoRecisao"
-          className="h-10 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm shadow-sm outline-none focus:border-slate-300 focus:ring-1 focus:ring-blue-200"
-          onChange={handleTipoRecisaoChange}>
-          <option value={TiposDemissao.pedido}>{TiposDemissao.pedido}</option>
-          <option value={TiposDemissao.semJustaCausa}>
-            {TiposDemissao.semJustaCausa}
-          </option>
-          <option value={TiposDemissao.justaCausa}>
-            {TiposDemissao.justaCausa}
-          </option>
-        </select>
-      </div>
-      <div className="flex gap-1 flex-col">
-        {tipoRecisao === "JUSTA CAUSA" ? (
-          <>
-            <label htmlFor="tipoAviso">Aviso Prévio</label>
-            <select
-              name="tipoAviso"
-              id="tipoAviso"
-              className="h-10 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm shadow-sm outline-none focus:border-slate-300 focus:ring-1 focus:ring-blue-200">
-              <option value={TiposAviso.nao}>{TiposAviso.nao}</option>
-            </select>
-          </>
-        ) : (
-          <>
-            <label htmlFor="tipoAviso">Aviso Prévio</label>
-            <select
-              name="tipoAviso"
-              id="tipoAviso"
-              className="h-10 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm shadow-sm outline-none focus:border-slate-300 focus:ring-1 focus:ring-blue-200">
-              {tipoRecisao === "PEDIDO" && (
-                <>
-                  <option value={TiposAviso.trabalhado}>
-                    {TiposAviso.trabalhado}
-                  </option>
-                  <option value={TiposAviso.indenizado}>
-                    {TiposAviso.indenizado}
-                  </option>
-                  <option value={TiposAviso.dispensado}>
-                    {TiposAviso.dispensado}
-                  </option>
-                  <option value={TiposAviso.naoCumprido}>
-                    {TiposAviso.naoCumprido}
-                  </option>
-                </>
-              )}
-              {tipoRecisao === "SEM JUSTA CAUSA" && (
-                <>
-                  <option value={TiposAviso.trabalhado}>
-                    {TiposAviso.trabalhado}
-                  </option>
-                  <option value={TiposAviso.indenizado}>
-                    {TiposAviso.indenizado}
-                  </option>
-                  <option value={TiposAviso.dispensado}>
-                    {TiposAviso.dispensado}
-                  </option>
-                  <option value={TiposAviso.naoCumprido}>
-                    {TiposAviso.naoCumprido}
-                  </option>
-                </>
-              )}
-            </select>
-          </>
-        )}
-      </div>
+    <>
+      <form className="grid text gap-4 p-4" onSubmit={handleSubmit}>
+        <div className="flex gap-1 flex-col">
+          <label htmlFor="dataAdmissao">Data de Admissão </label>
+          <input
+            name="dataAdmissao"
+            id="dataAdmissao"
+            className="input"
+            type="date"
+            required
+          />
+        </div>
+        <div className="flex gap-1 flex-col">
+          <label htmlFor="dataDemissao">Data da Rescisão </label>
+          <input
+            name="dataDemissao"
+            id="dataDemissao"
+            className="input"
+            type="date"
+            required
+          />
+        </div>
+        <div className="flex gap-1 flex-col">
+          <label htmlFor="salAtual">Salário Atual (R$) </label>
+          <input
+            name="salAtual"
+            id="salAtual"
+            className="input"
+            type="number"
+            required
+          />
+        </div>
+        <div className="flex gap-1 flex-col">
+          <label htmlFor="tipoRecisao">Tipo de Rescisão </label>
+          <select
+            name="tipoRecisao"
+            id="tipoRecisao"
+            className="h-10 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm shadow-sm outline-none focus:border-slate-300 focus:ring-1 focus:ring-blue-200"
+            onChange={handleTipoRecisaoChange}>
+            <option value={TiposDemissao.pedido}>{TiposDemissao.pedido}</option>
+            <option value={TiposDemissao.semJustaCausa}>
+              {TiposDemissao.semJustaCausa}
+            </option>
+            <option value={TiposDemissao.justaCausa}>
+              {TiposDemissao.justaCausa}
+            </option>
+          </select>
+        </div>
+        <div className="flex gap-1 flex-col">
+          {tipoRecisao === "JUSTA CAUSA" ? (
+            <>
+              <label htmlFor="tipoAviso">Aviso Prévio</label>
+              <select
+                name="tipoAviso"
+                id="tipoAviso"
+                className="h-10 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm shadow-sm outline-none focus:border-slate-300 focus:ring-1 focus:ring-blue-200">
+                <option value={TiposAviso.nao}>{TiposAviso.nao}</option>
+              </select>
+            </>
+          ) : (
+            <>
+              <label htmlFor="tipoAviso">Aviso Prévio</label>
+              <select
+                name="tipoAviso"
+                id="tipoAviso"
+                className="h-10 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm shadow-sm outline-none focus:border-slate-300 focus:ring-1 focus:ring-blue-200">
+                {tipoRecisao === "PEDIDO" && (
+                  <>
+                    <option value={TiposAviso.trabalhado}>
+                      {TiposAviso.trabalhado}
+                    </option>
+                    <option value={TiposAviso.indenizado}>
+                      {TiposAviso.indenizado}
+                    </option>
+                    <option value={TiposAviso.dispensado}>
+                      {TiposAviso.dispensado}
+                    </option>
+                    <option value={TiposAviso.naoCumprido}>
+                      {TiposAviso.naoCumprido}
+                    </option>
+                  </>
+                )}
+                {tipoRecisao === "SEM JUSTA CAUSA" && (
+                  <>
+                    <option value={TiposAviso.trabalhado}>
+                      {TiposAviso.trabalhado}
+                    </option>
+                    <option value={TiposAviso.indenizado}>
+                      {TiposAviso.indenizado}
+                    </option>
+                    <option value={TiposAviso.dispensado}>
+                      {TiposAviso.dispensado}
+                    </option>
+                    <option value={TiposAviso.naoCumprido}>
+                      {TiposAviso.naoCumprido}
+                    </option>
+                  </>
+                )}
+              </select>
+            </>
+          )}
+        </div>
 
-      <div className="flex gap-1 flex-col">
-        <label htmlFor="feriasVencidas">Férias vencidas a pagar?</label>
-        <select
-          name="feriasVencidas"
-          id="feriasVencidas"
-          className="h-10 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm shadow-sm outline-none focus:border-slate-300 focus:ring-1 focus:ring-blue-200"
-          onChange={handleFeriasVencidasChange}>
-          <option value="0">Não</option>
-          <option value="1">Sim</option>
-        </select>
-        {feriasVencidas && (
-          <div className="flex gap-1 flex-col">
-            <label htmlFor="feriasVencidasPeriodos">Periodos</label>
-            <input
-              name="feriasVencidasPeriodos"
-              id="feriasVencidasPeriodos"
-              type="number"
-              className="input"
-              min={1}
-              placeholder="Qnt. Periodos Vencidos: (Minimo 1)
+        <div className="flex gap-1 flex-col">
+          <label htmlFor="feriasVencidas">Férias vencidas a pagar?</label>
+          <select
+            name="feriasVencidas"
+            id="feriasVencidas"
+            className="h-10 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm shadow-sm outline-none focus:border-slate-300 focus:ring-1 focus:ring-blue-200"
+            onChange={handleFeriasVencidasChange}>
+            <option value="0">Não</option>
+            <option value="1">Sim</option>
+          </select>
+          {feriasVencidas && (
+            <div className="flex gap-1 flex-col">
+              <label htmlFor="feriasVencidasPeriodos">Periodos</label>
+              <input
+                name="feriasVencidasPeriodos"
+                id="feriasVencidasPeriodos"
+                type="number"
+                className="input"
+                min={1}
+                placeholder="Qnt. Periodos Vencidos: (Minimo 1)
               "
-              value={periodos}
-              onChange={(e) => setPeriodos(Number(e.target.value))}
-            />
-          </div>
-        )}
-      </div>
+                value={periodos}
+                onChange={(e) => setPeriodos(Number(e.target.value))}
+              />
+            </div>
+          )}
+        </div>
 
-      {/* --------------------------------------------------------- */}
-      <div className="flex gap-1 flex-col">
-        <label htmlFor="dependentes">Dependentes?</label>
-        <select
-          name="dependentes"
-          id="dependentes"
-          className="h-10 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm shadow-sm outline-none focus:border-slate-300 focus:ring-1 focus:ring-blue-200"
-          onChange={(e) => {
-            handleDependentesChange(e.target.value);
-          }}>
-          <option value={0}>Não</option>
-          <option value={1}>Sim</option>
-        </select>
-        {dependentes && (
-          <div className="flex gap-1 flex-col">
-            <label htmlFor="qntDependentes">Quantidade de Dependentes</label>
-            <input
-              name="qntDependentes"
-              id="qntDependentes"
-              type="number"
-              className="input"
-              min={1}
-              max={30}
-              required
-              placeholder="Numero de Dependentes
+        {/* --------------------------------------------------------- */}
+        <div className="flex gap-1 flex-col">
+          <label htmlFor="dependentes">Dependentes?</label>
+          <select
+            name="dependentes"
+            id="dependentes"
+            className="h-10 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm shadow-sm outline-none focus:border-slate-300 focus:ring-1 focus:ring-blue-200"
+            onChange={(e) => {
+              handleDependentesChange(e.target.value);
+            }}>
+            <option value={0}>Não</option>
+            <option value={1}>Sim</option>
+          </select>
+          {dependentes && (
+            <div className="flex gap-1 flex-col">
+              <label htmlFor="qntDependentes">Quantidade de Dependentes</label>
+              <input
+                name="qntDependentes"
+                id="qntDependentes"
+                type="number"
+                className="input"
+                min={1}
+                max={30}
+                required
+                placeholder="Numero de Dependentes
               "
-              value={qntDependentes}
-              onChange={(e) => {
-                setQntDependentes(Number(e.target.value));
-              }}
-            />
-          </div>
-        )}
-      </div>
-      <button type="submit" className="btn btn-primary text-nowrap m-auto">
-        Calcular
-      </button>
-      <div>
-        <Result result={result}></Result>
-      </div>
-    </form>
+                value={qntDependentes}
+                onChange={(e) => {
+                  setQntDependentes(Number(e.target.value));
+                }}
+              />
+            </div>
+          )}
+        </div>
+        <button type="submit" className="btn btn-primary text-nowrap m-auto">
+          Calcular
+        </button>
+      </form>
+      <div>{result && <Result result={result}></Result>}</div>
+    </>
   );
 }
