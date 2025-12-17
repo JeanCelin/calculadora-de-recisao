@@ -6,7 +6,7 @@ import Recipe from "./Recipe";
 
 export default function About() {
   return (
-    <section className=" bg-blue-100 flex flex-col content-center items-center px-4 py-20   text  ">
+    <section className=" bg-blue-100 flex flex-col content-center items-center px-4 py-10   text  ">
       {/* <header className="max-w-4xl flex flex-col gap-4 content-center items-center mb-11">
         <p className="title">
           Calcule o valor da sua recisão trabalhista em minutos
@@ -23,8 +23,8 @@ export default function About() {
         </button>
       </header> */}
       <section>
-        <h2 className="title">Fórmulas</h2>
-        <ol className="flex flex-col gap-2">
+        <h2 className="title pb-4">Fórmulas</h2>
+        <ol className="flex flex-col gap-6">
           <li>
             <Recipe
               title="Saldo de salário"

@@ -115,7 +115,7 @@ export default function Form() {
     setDependentes(teste);
   };
   return (
-    <>
+    <div className="pb-10 px-1.5">
       <form className="grid text gap-4 p-4" onSubmit={handleSubmit}>
         <div className="flex gap-1 flex-col">
           <label htmlFor="dataAdmissao">Data de Admissão </label>
@@ -284,13 +284,15 @@ export default function Form() {
           Calcular
         </button>
       </form>
-      <p className="bg-amber-100 border-2 border-[#F0A811] p-2 rounded-lg text">
-        A calculadora rescisória está em desenvolvimento contínuo e tem caráter
-        meramente estimativo. Considerando que o processo rescisório possui
-        diversas particularidades e pode variar conforme o caso, recomenda-se a
-        consulta a um profissional especializado.
-      </p>
+      <div className="p-2">
+        <p className="bg-amber-100 border-2 border-[#F0A811] p-2 rounded-lg text">
+          A calculadora rescisória está em desenvolvimento contínuo e tem
+          caráter meramente estimativo. Considerando que o processo rescisório
+          possui diversas particularidades e pode variar conforme o caso,
+          recomenda-se a consulta a um profissional especializado.
+        </p>
+      </div>
       <div>{result && <Result result={result}></Result>}</div>
-    </>
+    </div>
   );
 }
