@@ -57,7 +57,7 @@ export function semJustaCausa(dados: Dados) {
     feriasProporcionaisReceber,
     feriasPropsUmTerco,
     decimoTerceiroSalario,
-    valorAviso
+     aviso == "INDENIZADO" ? valorAviso: 0
   );
 
   //Deduções
@@ -87,7 +87,16 @@ export function semJustaCausa(dados: Dados) {
     inss,
     quantidadeDependentes
   );
-  const totalDeducao = somar(valorAviso, inss, inssDecimoTerceiro, irrf);
+  
+    // IRRF Décimo Terceiro
+  // Não entra dependentes, usa INSS do décimo terceiro
+
+  const irrfDecimoTerceiro = calcularDescontoIRRF(
+    decimoTerceiroSalario,
+    inssDecimoTerceiro,
+    0
+  )
+  const totalDeducao = somar(aviso == "NÃO CUMPRIDO" ? valorAviso: 0, inss, inssDecimoTerceiro, irrf, irrfDecimoTerceiro);
   //Total Geral
   const totalLiquido =
     totalVerbas + fgtsSaqueDisponivel + totalDeducao * Number(-1);
@@ -105,7 +114,7 @@ export function semJustaCausa(dados: Dados) {
       feriasProps: feriasProporcionaisReceber,
       feriasPropsUmTerco: feriasPropsUmTerco,
       decimoTerceiroSalario: decimoTerceiroSalario,
-      aviso: valorAviso,
+      aviso: aviso == "INDENIZADO" ? valorAviso: 0,
       totalVerbas: totalVerbas,
     },
     fgts: {
@@ -117,10 +126,11 @@ export function semJustaCausa(dados: Dados) {
       fgtsSaqueDisponivel: fgtsSaqueDisponivel,
     },
     deducao: {
-      valorAviso: valorAviso,
+      valorAviso: aviso == "NÃO CUMPRIDO" ? valorAviso: 0,
       inss: inss,
       inssDecimoTerceiro: inssDecimoTerceiro,
       irrf: irrf,
+      irrfDecimoTerceiro: irrfDecimoTerceiro,
       totalDeducao: totalDeducao,
     },
     totalLiquido: totalLiquido,

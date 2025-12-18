@@ -63,6 +63,7 @@ export function pedido(dados: Dados) {
     4) Aviso Prévio Indenizado (se o funcionário não trabalhar, ele PAGA a empresa);
  */
 
+
   // Verbas Recisórias
   const totalVerbas = somar(
     saldoSalarioReceber,
@@ -71,7 +72,7 @@ export function pedido(dados: Dados) {
     feriasPropsUmTerco,
     feriasVencidasReceber,
     feriasVencidasUmTerco,
-    valorAviso
+     aviso == "INDENIZADO" ? valorAviso: 0
   );
 
   //Deduções
@@ -101,7 +102,18 @@ export function pedido(dados: Dados) {
     inss,
     quantidadeDependentes
   );
-  const totalDeducao = somar(valorAviso, inss, inssDecimoTerceiro, irrf);
+
+  // IRRF Décimo Terceiro
+  // Não entra dependentes, usa INSS do décimo terceiro
+
+  const irrfDecimoTerceiro = calcularDescontoIRRF(
+    decimoTerceiroSalario,
+    inssDecimoTerceiro,
+    0
+  )
+
+
+  const totalDeducao = somar(aviso == "NÃO CUMPRIDO" ? valorAviso: 0, inss, inssDecimoTerceiro, irrf, irrfDecimoTerceiro);
 
   //Total Geral
   const totalLiquido =
@@ -120,7 +132,7 @@ export function pedido(dados: Dados) {
       feriasProps: feriasProporcionaisReceber,
       feriasPropsUmTerco: feriasPropsUmTerco,
       decimoTerceiroSalario: decimoTerceiroSalario,
-      aviso: valorAviso,
+      aviso: aviso == "INDENIZADO" ? valorAviso: 0,
       totalVerbas: totalVerbas,
     },
     fgts: {
@@ -132,10 +144,11 @@ export function pedido(dados: Dados) {
       fgtsSaqueDisponivel: fgtsSaqueDisponivel,
     },
     deducao: {
-      valorAviso: valorAviso,
+      valorAviso: aviso == "NÃO CUMPRIDO" ? valorAviso: 0,
       inss: inss,
       inssDecimoTerceiro: inssDecimoTerceiro,
       irrf: irrf,
+      irrfDecimoTerceiro: irrfDecimoTerceiro,
       totalDeducao: totalDeducao,
     },
     totalLiquido: totalLiquido,

@@ -2,8 +2,6 @@ import { calcularAliquotaIRRF } from "./calc-aliquota-irrf";
 
 export function calcularDescontoIRRF(
   verbasTributaveisIRRF: number,
-  // decimoTerceiro: number,
-  // inssDecimoTerceiro: number,
   inss: number,
   quantidadeDependentes: number
 ): number {

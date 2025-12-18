@@ -26,6 +26,7 @@ export type Resposta = {
     inss: number | boolean;
     inssDecimoTerceiro: number | boolean;
     irrf: number | boolean;
+    irrfDecimoTerceiro: number;
     totalDeducao: number | boolean;
   };
   totalLiquido: number;

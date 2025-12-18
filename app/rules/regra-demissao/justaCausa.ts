@@ -56,14 +56,14 @@ export function justaCausa(dados: Dados) {
   // Verbas Recisórias
   const totalVerbas = somar(
     saldoSalarioReceber,
-    valorAviso,
+     aviso == "INDENIZADO" ? valorAviso: 0,
     decimoTerceiroSalario,
     feriasVencidasReceber,
     feriasVencidasUmTerco
   );
 
   //Deduções
-  // base IRRF
+  // base INSS
   const verbasTributaveisINSS = somar(
     saldoSalarioReceber,
     feriasVencidasReceber,
@@ -87,8 +87,17 @@ export function justaCausa(dados: Dados) {
     inss,
     quantidadeDependentes
   );
-  const totalDeducao = somar(valorAviso, inss, inssDecimoTerceiro, irrf);
-
+  
+  // IRRF Décimo Terceiro
+  // Não entra dependentes, usa INSS do décimo terceiro
+  
+  const irrfDecimoTerceiro = calcularDescontoIRRF(
+    decimoTerceiroSalario,
+    inssDecimoTerceiro,
+    0
+  )
+  
+  const totalDeducao = somar(aviso == "NÃO CUMPRIDO" ? valorAviso: 0, inss, inssDecimoTerceiro, irrf, irrfDecimoTerceiro);
   //Total Geral
   const totalLiquido =
     totalVerbas + fgtsSaqueDisponivel + totalDeducao * Number(-1);
@@ -106,7 +115,7 @@ export function justaCausa(dados: Dados) {
       feriasProps: false,
       feriasPropsUmTerco: false,
       decimoTerceiroSalario: false,
-      aviso: valorAviso,
+      aviso: aviso == "INDENIZADO" ? valorAviso: 0,
       totalVerbas: totalVerbas,
     },
     fgts: {
@@ -118,10 +127,11 @@ export function justaCausa(dados: Dados) {
       fgtsSaqueDisponivel: fgtsSaqueDisponivel,
     },
     deducao: {
-      valorAviso: valorAviso,
+      valorAviso: aviso == "NÃO CUMPRIDO" ? valorAviso: 0,
       inss: inss,
       inssDecimoTerceiro: inssDecimoTerceiro,
       irrf: irrf,
+      irrfDecimoTerceiro: irrfDecimoTerceiro,
       totalDeducao: totalDeducao,
     },
     totalLiquido: totalLiquido,
