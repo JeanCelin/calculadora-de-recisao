@@ -23,7 +23,52 @@ export default function About() {
         </button>
       </header> */}
       <section>
-        <h2 className="title pb-4">Fórmulas</h2>
+        <h2 className="title pb-4">O que são os campos do cálculo?</h2>
+        <div className="flex flex-col gap-2">
+          <h3 className="title">O que é Saldo de Salário?</h3>
+          <div className="flex flex-col gap-3">
+            <p>
+              O saldo de salário é a parcela a receber equivalente aos dia
+              trabalhados no mês da recisão.
+            </p>
+            <p>
+              Por exemplo: alguém que encerrou seus serviços para uma empresa no
+              dia 14 de Maio de 2025 e recebia R$2.000,00.
+            </p>
+            <p>Aplicamos a fórmula: (Saldo = Salário/30 x Dias trabalhados)</p>
+            <p>
+              Saldo de Salario = 2000/30 x 14 (Saiu no dia 14 de Maio) Saldo de
+              Salário = R$ 933,33
+            </p>
+            <p>
+              Ao deixar a empresa o trabalhador terá R$ 933,33 de saldo de
+              salário.
+            </p>
+          </div>
+          <div className="flex flex-col gap-2">
+            <h3 className="title">
+              O que são férias vencidas e férias 1/3 (Um terço)?
+            </h3>
+            <div className="flex flex-col gap-3">
+              <p>
+                A cada 12 meses de trabalho, o funcionário adquire o direito a
+                um período de férias remuneradas, normalmente de 30 dias, com o
+                pagamento do salário acrescido de 1/3 constitucional.
+              </p>
+              <p>
+                Após completar esses 12 meses (período aquisitivo), a empresa
+                tem até mais 12 meses para conceder essas férias ao trabalhador.
+                Esse segundo período é chamado de período concessivo.
+              </p>
+              <p>
+                As férias vencidas ocorrem quando a empresa não concede as
+                férias dentro do período concessivo. Nesse caso, a CLT determina
+                que o empregado deve receber as férias em dobro, ou seja:
+              </p>
+            </div>
+          </div>
+        </div>
+
         <ol className="flex flex-col gap-6">
           <li>
             <Recipe
