@@ -4,7 +4,7 @@ import { calcferiasVencidas } from "@/app/utils/ferias/calc-ferias-vencidas";
 import { calcUmTercoFerias } from "@/app/utils/ferias/calc-um-terco-ferias";
 import { saldoSalario } from "@/app/utils/saldo-salario/calc-saldo-salario";
 import { Resposta } from "@/app/types/resposta";
-
+import { feriasProporcionais } from "@/app/utils/ferias/calc-ferias-proporcinais";
 import { calcularDescontoINSS } from "@/app/utils/inss/calc-desconto-inss";
 import { calcularDescontoIRRF } from "@/app/utils/irrf/calc-desconto-irrf";
 import { somar } from "@/app/utils/somar";
@@ -30,14 +30,14 @@ export function justaCausa(dados: Dados) {
     ? calcferiasVencidas(salario, feriasVencidasPeriodos)
     : 0;
   const feriasVencidasUmTerco = calcUmTercoFerias(feriasVencidasReceber);
+
+  // 3) Férias Proporcionais + 1/3;
+  const feriasProporcionaisReceber = feriasProporcionais(dados);
+  const feriasPropsUmTerco = calcUmTercoFerias(feriasProporcionaisReceber);
   /*
-    3) Férias Proporcionais + 1/3; */
-  // Demissão Por Justa Causa o funcionário perde o direito de ferias proporcionais
-  // const feriasProporcionaisReceber = FeriasProporcionais();
-  // const feriasPropsUmTerco = CalcUmTercoFerias(feriasProporcionaisReceber);
-  /*
+  Em demissao por justa ausa o funcionario perde direito ao décimo terceiro salario 
     4) 13º Salário Proporcional; */
-  const decimoTerceiroSalario = decimoTerceiro(dados);
+   const decimoTerceiroSalario = 0;
   /* 
     5) Saldo FGTS depositado (O funcionário não recebe multa e não saca FGTS, mas o saldo continua lá.)
     6) Depósito FGTS do mês da Recisão
@@ -56,8 +56,9 @@ export function justaCausa(dados: Dados) {
   // Verbas Recisórias
   const totalVerbas = somar(
     saldoSalarioReceber,
-     aviso == "INDENIZADO" ? valorAviso: 0,
-    decimoTerceiroSalario,
+    aviso == "INDENIZADO" ? valorAviso : 0,
+    feriasProporcionaisReceber,
+    feriasPropsUmTerco,
     feriasVencidasReceber,
     feriasVencidasUmTerco
   );
@@ -87,17 +88,23 @@ export function justaCausa(dados: Dados) {
     inss,
     quantidadeDependentes
   );
-  
+
   // IRRF Décimo Terceiro
   // Não entra dependentes, usa INSS do décimo terceiro
-  
+
   const irrfDecimoTerceiro = calcularDescontoIRRF(
     decimoTerceiroSalario,
     inssDecimoTerceiro,
     0
-  )
-  
-  const totalDeducao = somar(aviso == "NÃO CUMPRIDO" ? valorAviso: 0, inss, inssDecimoTerceiro, irrf, irrfDecimoTerceiro);
+  );
+
+  const totalDeducao = somar(
+    aviso == "NÃO CUMPRIDO" ? valorAviso : 0,
+    inss,
+    inssDecimoTerceiro,
+    irrf,
+    irrfDecimoTerceiro
+  );
   //Total Geral
   const totalLiquido =
     totalVerbas + fgtsSaqueDisponivel + totalDeducao * Number(-1);
@@ -112,10 +119,10 @@ export function justaCausa(dados: Dados) {
       saldoSalario: saldoSalarioReceber,
       feriasVencidas: feriasVencidasReceber,
       feriasVencidasUmTerco: feriasVencidasUmTerco,
-      feriasProps: false,
-      feriasPropsUmTerco: false,
+      feriasProps: feriasProporcionaisReceber,
+      feriasPropsUmTerco: feriasPropsUmTerco,
       decimoTerceiroSalario: false,
-      aviso: aviso == "INDENIZADO" ? valorAviso: 0,
+      aviso: aviso == "INDENIZADO" ? valorAviso : 0,
       totalVerbas: totalVerbas,
     },
     fgts: {
@@ -127,7 +134,7 @@ export function justaCausa(dados: Dados) {
       fgtsSaqueDisponivel: fgtsSaqueDisponivel,
     },
     deducao: {
-      valorAviso: aviso == "NÃO CUMPRIDO" ? valorAviso: 0,
+      valorAviso: aviso == "NÃO CUMPRIDO" ? valorAviso : 0,
       inss: inss,
       inssDecimoTerceiro: inssDecimoTerceiro,
       irrf: irrf,
